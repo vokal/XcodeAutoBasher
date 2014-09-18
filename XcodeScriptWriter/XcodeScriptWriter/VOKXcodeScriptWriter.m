@@ -73,16 +73,12 @@ static VOKXcodeScriptWriter *sharedPlugin;
                                                          keyEquivalent:@""];
         [actionMenuItem setTarget:self];
         [subMenu addItem:actionMenuItem];
-    } else {
-        NSLog(@"Menu item not found!");
     }
 }
 
 - (void)loadExistingFolderWatchers
 {
     NSArray *folderObjects = [[NSUserDefaults standardUserDefaults] objectForKey:@"VOKXcodeScriptWriterObjects"];
-
-    NSLog(@"Folder objects count: %@", @([folderObjects count]));
     if (![folderObjects count]) {
         //Hard code some shit for testing.
         VOKScriptForFolder *scripty = [[VOKScriptForFolder alloc] init];
@@ -96,8 +92,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
             if ([scriptForFolder isKindOfClass:[VOKScriptForFolder class]]) {
                 [self.folderObjects addObject:scriptForFolder];
                 [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scriptForFolder.pathToFolder];
-            } else {
-                NSLog(@"WAIT! This isn't a folder, it's a %@!", NSStringFromClass([scriptForFolder class]));
             }
         }
     }
@@ -111,8 +105,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
         self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle andArray:self.folderObjects];
         self.windowController.delegate = self;
     }
-    
-    NSLog(@"Window controller %@", self.windowController);
     
     [[self.windowController window] makeKeyAndOrderFront:self];
 }

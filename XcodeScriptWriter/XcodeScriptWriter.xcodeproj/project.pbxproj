@@ -17,6 +17,7 @@
 		33E0503419CB6A70003289F8 /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502E19CB6A70003289F8 /* VOKDirectoryWatcher.m */; };
 		33E0503B19CB6AB7003289F8 /* VOKScriptWriterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0503919CB6AB7003289F8 /* VOKScriptWriterWindowController.m */; };
 		33E0503C19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33E0503A19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib */; };
+		33FEA41F19CB99A200B7346F /* VOKDetectableClickTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33FEA41E19CB99A200B7346F /* VOKDetectableClickTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		33E0503919CB6AB7003289F8 /* VOKScriptWriterWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptWriterWindowController.m; sourceTree = "<group>"; };
 		33E0503A19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VOKScriptWriterWindowController.xib; sourceTree = "<group>"; };
 		33E0503D19CB6EDD003289F8 /* XcodeScriptWriter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "XcodeScriptWriter-Info.plist"; sourceTree = "<group>"; };
+		33FEA41D19CB99A200B7346F /* VOKDetectableClickTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDetectableClickTableView.h; sourceTree = "<group>"; };
+		33FEA41E19CB99A200B7346F /* VOKDetectableClickTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKDetectableClickTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,8 @@
 		33E0503719CB6A85003289F8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				33FEA41D19CB99A200B7346F /* VOKDetectableClickTableView.h */,
+				33FEA41E19CB99A200B7346F /* VOKDetectableClickTableView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */,
 				33E0503219CB6A70003289F8 /* NSString+Localized.m in Sources */,
 				33E0503319CB6A70003289F8 /* VDKQueue.m in Sources */,
+				33FEA41F19CB99A200B7346F /* VOKDetectableClickTableView.m in Sources */,
 				33E0503419CB6A70003289F8 /* VOKDirectoryWatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

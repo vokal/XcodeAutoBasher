@@ -70,7 +70,7 @@ static VOKDirectoryWatcher *_sharedInstance;
 
 - (void)VDKQueue:(VDKQueue *)queue receivedNotification:(NSString *)noteName forPath:(NSString *)path
 {
-    NSLog(@"VOKDirectoryWatcherGOtPath %@", path);
+    NSLog(@"VOKDirectoryWatcher got path: %@", path);
     [self.delegate directoryDidChange:path];
 }
 

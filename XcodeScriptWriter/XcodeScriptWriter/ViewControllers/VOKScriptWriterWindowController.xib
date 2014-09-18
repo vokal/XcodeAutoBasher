@@ -32,7 +32,7 @@
                             <rect key="frame" x="1" y="17" width="484" height="197"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="YtJ-u4-ffh" id="vgT-5N-8tV">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="YtJ-u4-ffh" id="vgT-5N-8tV" customClass="VOKDetectableClickTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="484" height="197"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -69,6 +69,7 @@
                                     <connections>
                                         <outlet property="dataSource" destination="-2" id="Onv-3m-zhc"/>
                                         <outlet property="delegate" destination="-2" id="Ukp-zN-67o"/>
+                                        <outlet property="moarDelegate" destination="-2" id="bE1-Ch-Y00"/>
                                     </connections>
                                 </tableView>
                             </subviews>

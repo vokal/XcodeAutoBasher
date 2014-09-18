@@ -10,6 +10,7 @@
 
 #import "NSString+Localized.h"
 #import "VOKScriptForFolder.h"
+#import "VOKDetectableClickTableView.h"
 
 typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnFolderPath,
@@ -17,7 +18,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnCount
 };
 
-@interface VOKScriptWriterWindowController () <NSTableViewDelegate, NSTableViewDataSource>
+@interface VOKScriptWriterWindowController () <NSTableViewDelegate, NSTableViewDataSource, VOKMoarTableViewDelegate>
 @property (nonatomic, weak) IBOutlet NSTableView *currentWatchesTableView;
 @property (nonatomic, weak) IBOutlet NSButton *addButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteButton;
@@ -104,6 +105,47 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
     }
 }
 
+- (void)openChooserForRow:(NSInteger)rowIndex inColumn:(NSInteger)columnIndex;
+{
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    [panel setAllowsMultipleSelection:NO];
+
+    switch (columnIndex) {
+        case VOKTableColumnFolderPath:
+            [panel setCanChooseFiles:NO];
+            [panel setCanChooseDirectories:YES];
+            break;
+        case VOKTableColumnScriptPath:
+            [panel setCanChooseFiles:YES];
+            [panel setCanChooseDirectories:NO];
+            break;
+        default:
+            break;
+    }
+        
+    NSInteger clicked = [panel runModal];
+    VOKScriptForFolder *scriptForFolder = self.scripts[rowIndex];
+    
+    if (clicked == NSFileHandlingPanelOKButton) {
+        //Single select so only one item
+        NSURL *url = [[panel URLs] firstObject];
+        NSString *path = [url path];
+        NSLog(@"Selected path: %@", path);
+        switch (columnIndex) {
+            case VOKTableColumnFolderPath:
+                scriptForFolder.pathToFolder = path;
+                break;
+            case VOKTableColumnScriptPath:
+                scriptForFolder.pathToScript = path;
+                break;
+            default:
+                break;
+        }
+
+        [self.currentWatchesTableView reloadData];
+    }
+}
+
 #pragma mark - NSTableViewDelegate
 
 - (void)tableView:(NSTableView *)tableView
@@ -121,9 +163,14 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
         scriptForFolder.pathToScript = string;
     }
     
-    NSLog(@"Script for folder: %@", scriptForFolder);
-    
     [self.delegate addScript:scriptForFolder];
+}
+
+#pragma mark - VOKMoarTableViewDelegate
+
+- (void)tableView:(NSTableView *)tableView didClickRow:(NSInteger)rowIndex inColumn:(NSInteger)columnIndex
+{
+    [self openChooserForRow:rowIndex inColumn:columnIndex];
 }
 
 @end
