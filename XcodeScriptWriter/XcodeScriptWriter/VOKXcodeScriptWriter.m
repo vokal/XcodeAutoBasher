@@ -15,6 +15,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 @interface VOKXcodeScriptWriter()
 
 @property (nonatomic, strong) NSBundle *bundle;
+
 @end
 
 @implementation VOKXcodeScriptWriter
@@ -63,6 +64,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 }
 
 #pragma mark - Actions
+
 // Sample Action, for menu item:
 - (void)doMenuAction
 {
