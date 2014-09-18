@@ -11,6 +11,7 @@
 		3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918A19CB1447003DDEDC /* Foundation.framework */; };
 		3322919119CB1447003DDEDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3322918F19CB1447003DDEDC /* InfoPlist.strings */; };
 		3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */; };
+		33C21E9119CB24BC0012443C /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C21E9019CB24BC0012443C /* VOKDirectoryWatcher.m */; };
 		33D1F21319CB1AD600FD139F /* NSString+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D1F21219CB1AD600FD139F /* NSString+Localized.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,8 @@
 		3322919219CB1447003DDEDC /* VOKXcodeScriptWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKXcodeScriptWriter.h; sourceTree = "<group>"; };
 		3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKXcodeScriptWriter.m; sourceTree = "<group>"; };
 		3322919519CB1447003DDEDC /* XcodeScriptWriter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XcodeScriptWriter-Prefix.pch"; sourceTree = "<group>"; };
+		33C21E8F19CB24BC0012443C /* VOKDirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDirectoryWatcher.h; sourceTree = "<group>"; };
+		33C21E9019CB24BC0012443C /* VOKDirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKDirectoryWatcher.m; sourceTree = "<group>"; };
 		33D1F21119CB1AD600FD139F /* NSString+Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Localized.h"; sourceTree = "<group>"; };
 		33D1F21219CB1AD600FD139F /* NSString+Localized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Localized.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +76,8 @@
 				3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */,
 				33D1F21119CB1AD600FD139F /* NSString+Localized.h */,
 				33D1F21219CB1AD600FD139F /* NSString+Localized.m */,
+				33C21E8F19CB24BC0012443C /* VOKDirectoryWatcher.h */,
+				33C21E9019CB24BC0012443C /* VOKDirectoryWatcher.m */,
 				3322918D19CB1447003DDEDC /* Supporting Files */,
 			);
 			path = XcodeScriptWriter;
@@ -170,6 +175,7 @@
 			files = (
 				3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */,
 				33D1F21319CB1AD600FD139F /* NSString+Localized.m in Sources */,
+				33C21E9119CB24BC0012443C /* VOKDirectoryWatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
