@@ -11,6 +11,7 @@
 		3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918A19CB1447003DDEDC /* Foundation.framework */; };
 		3322919119CB1447003DDEDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3322918F19CB1447003DDEDC /* InfoPlist.strings */; };
 		3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */; };
+		33A2D23C19CB50740086AF6A /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 33A2D23B19CB50740086AF6A /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		33C21E9119CB24BC0012443C /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C21E9019CB24BC0012443C /* VOKDirectoryWatcher.m */; };
 		33C21E9419CB337A0012443C /* VOKScriptForFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C21E9319CB337A0012443C /* VOKScriptForFolder.m */; };
 		33D1F21319CB1AD600FD139F /* NSString+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D1F21219CB1AD600FD139F /* NSString+Localized.m */; };
@@ -25,6 +26,8 @@
 		3322919219CB1447003DDEDC /* VOKXcodeScriptWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKXcodeScriptWriter.h; sourceTree = "<group>"; };
 		3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKXcodeScriptWriter.m; sourceTree = "<group>"; };
 		3322919519CB1447003DDEDC /* XcodeScriptWriter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XcodeScriptWriter-Prefix.pch"; sourceTree = "<group>"; };
+		33A2D23A19CB50740086AF6A /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
+		33A2D23B19CB50740086AF6A /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
 		33C21E8F19CB24BC0012443C /* VOKDirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDirectoryWatcher.h; sourceTree = "<group>"; };
 		33C21E9019CB24BC0012443C /* VOKDirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKDirectoryWatcher.m; sourceTree = "<group>"; };
 		33C21E9219CB337A0012443C /* VOKScriptForFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptForFolder.h; sourceTree = "<group>"; };
@@ -83,6 +86,8 @@
 				33C21E9319CB337A0012443C /* VOKScriptForFolder.m */,
 				33C21E8F19CB24BC0012443C /* VOKDirectoryWatcher.h */,
 				33C21E9019CB24BC0012443C /* VOKDirectoryWatcher.m */,
+				33A2D23A19CB50740086AF6A /* VDKQueue.h */,
+				33A2D23B19CB50740086AF6A /* VDKQueue.m */,
 				3322918D19CB1447003DDEDC /* Supporting Files */,
 			);
 			path = XcodeScriptWriter;
@@ -108,7 +113,7 @@
 				3322918119CB1447003DDEDC /* Sources */,
 				3322918219CB1447003DDEDC /* Frameworks */,
 				3322918319CB1447003DDEDC /* Resources */,
-				33C21E8E19CB1BEB0012443C /* ShellScript */,
+				33C21E8E19CB1BEB0012443C /* Objclean Run Script */,
 			);
 			buildRules = (
 			);
@@ -158,18 +163,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		33C21E8E19CB1BEB0012443C /* ShellScript */ = {
+		33C21E8E19CB1BEB0012443C /* Objclean Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Objclean Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\"\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
+			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\"?!\"${SRCROOT}\"/XcodeScriptWriter/VDKQueue.m\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -182,6 +188,7 @@
 				33D1F21319CB1AD600FD139F /* NSString+Localized.m in Sources */,
 				33C21E9119CB24BC0012443C /* VOKDirectoryWatcher.m in Sources */,
 				33C21E9419CB337A0012443C /* VOKScriptForFolder.m in Sources */,
+				33A2D23C19CB50740086AF6A /* VDKQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +284,7 @@
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XcodeScriptWriter/XcodeScriptWriter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "XcodeScriptWriter/XcodeScriptWriter-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -292,6 +300,7 @@
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XcodeScriptWriter/XcodeScriptWriter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "XcodeScriptWriter/XcodeScriptWriter-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";

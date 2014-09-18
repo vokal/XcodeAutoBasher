@@ -33,6 +33,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
         dispatch_once(&onceToken, ^{
             sharedPlugin = [[self alloc] initWithBundle:plugin];
             sharedPlugin.folderObjects = [NSMutableArray array];
+            [[VOKDirectoryWatcher sharedInstance] setDelegate:sharedPlugin];
         });
     }
 }
@@ -86,14 +87,14 @@ static VOKXcodeScriptWriter *sharedPlugin;
         VOKScriptForFolder *scripty = [[VOKScriptForFolder alloc] init];
         scripty.pathToFolder = [self desktopPath];
         scripty.pathToScript = [[self desktopPath] stringByAppendingPathComponent:@"Basher.sh"];
-        [VOKDirectoryWatcher watchFolderWithPath:scripty.pathToFolder delegate:self];
+        [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scripty.pathToFolder];
         [self.folderObjects addObject:scripty];
     } else {
         //Add all the folders to the directory watcher.
         for (VOKScriptForFolder *scriptForFolder in folderObjects) {
             if ([scriptForFolder isKindOfClass:[VOKScriptForFolder class]]) {
                 [self.folderObjects addObject:scriptForFolder];
-                [VOKDirectoryWatcher watchFolderWithPath:scriptForFolder.pathToFolder delegate:self];
+                [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scriptForFolder.pathToFolder];
             } else {
                 NSLog(@"WAIT! This isn't a folder, it's a %@!", NSStringFromClass([scriptForFolder class]));
             }
@@ -117,9 +118,9 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 #pragma mark - VOKDirectoryWatcherDelegate
 
-- (void)directoryDidChange:(VOKDirectoryWatcher *)folderWatcher
+- (void)directoryDidChange:(NSString *)path
 {
-    NSPredicate *changedFolderPredicate = [NSPredicate predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(pathToFolder)), folderWatcher.watchedPath];
+    NSPredicate *changedFolderPredicate = [NSPredicate predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(pathToFolder)), path];
     NSArray *found = [self.folderObjects filteredArrayUsingPredicate:changedFolderPredicate];
     
     if ([found count] == 1) {
