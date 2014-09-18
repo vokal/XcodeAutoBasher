@@ -109,11 +109,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
     [alert runModal];
 }
 
-- (void)fireScript:(VOKScriptForFolder *)script
-{
-    NSLog(@"FIRE SCRIPT AT %@", script.pathToScript);
-}
-
 #pragma mark - VOKDirectoryWatcherDelegate
 
 - (void)directoryDidChange:(NSString *)path
@@ -123,8 +118,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
     
     if ([found count] == 1) {
         VOKScriptForFolder *script = [found firstObject];
-        NSLog(@"Folder at %@ changed!", script.pathToFolder);
-        [self fireScript:script];
+        [script runScript];
     } else {
         NSLog(@"Found directory count is not 1, it is %@!", @([found count]));
     }

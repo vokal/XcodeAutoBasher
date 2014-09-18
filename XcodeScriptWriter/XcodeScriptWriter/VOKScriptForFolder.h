@@ -13,4 +13,9 @@
 @property (nonatomic) NSString *pathToFolder;
 @property (nonatomic) NSString *pathToScript;
 
+/**
+ * Runs the script in bash. 
+ */
+- (BOOL)runScript;
+
 @end
