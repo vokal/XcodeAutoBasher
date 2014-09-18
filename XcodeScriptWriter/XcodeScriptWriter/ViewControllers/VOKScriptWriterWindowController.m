@@ -9,6 +9,7 @@
 #import "VOKScriptWriterWindowController.h"
 
 #import "NSString+Localized.h"
+#import "VOKScriptForFolder.h"
 
 typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnFolderPath,
@@ -27,14 +28,17 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 @property (nonatomic, weak) NSTableColumn *folderColumn;
 @property (nonatomic, weak) NSTableColumn *scriptColumn;
 
+@property (nonatomic) NSMutableArray *scripts;
+
 @end
 
 @implementation VOKScriptWriterWindowController
 
-- (id)initWithBundle:(NSBundle *)bundle
+- (id)initWithBundle:(NSBundle *)bundle andArray:(NSArray *)scripts
 {
     if (self = [super initWithWindowNibName:NSStringFromClass([self class])]) {
         _bundle = bundle;
+        _scripts = [NSMutableArray arrayWithArray:scripts];
         self.window.title = [NSString vok_pluginName];
     }
     return self;
@@ -71,15 +75,17 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return 5;
+    return [self.scripts count];
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+    VOKScriptForFolder *scriptForFolder = self.scripts[row];
+    
     if (tableColumn == self.folderColumn) {
-        return @"FOLDER";
+        return scriptForFolder.pathToFolder;
     } else {
-        return @"SCRIPT";
+        return scriptForFolder.pathToScript;
     }
 }
 

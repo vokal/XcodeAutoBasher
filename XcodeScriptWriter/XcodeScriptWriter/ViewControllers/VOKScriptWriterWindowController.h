@@ -10,6 +10,14 @@
 
 @interface VOKScriptWriterWindowController : NSWindowController
 
-- (id)initWithBundle:(NSBundle *)bundle;
+/**
+ *  Designated initializer
+ *
+ *  @param bundle  The bundle for the plugin
+ *  @param scripts An array of VOKScriptForFolder objects.
+ *
+ *  @return the initialized instance. 
+ */
+- (id)initWithBundle:(NSBundle *)bundle andArray:(NSArray *)scripts;
 
 @end

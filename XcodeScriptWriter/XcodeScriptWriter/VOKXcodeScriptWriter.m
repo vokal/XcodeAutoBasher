@@ -108,7 +108,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 - (void)showEditWindow
 {
     if (!self.windowController) {
-        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle];
+        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle andArray:self.folderObjects];
     }
     
     NSLog(@"Window controller %@", self.windowController);

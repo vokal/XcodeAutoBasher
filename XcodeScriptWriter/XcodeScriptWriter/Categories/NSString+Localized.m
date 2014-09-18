@@ -17,12 +17,12 @@
 
 + (NSString *)vok_folderPath
 {
-    return NSLocalizedString(@"Folder Path", @"Folder Path table header");
+    return NSLocalizedString(@"Watch This Folder", @"Folder Path table header");
 }
 
 + (NSString *)vok_scriptPath
 {
-    return NSLocalizedString(@"Script Path", @"Script path table header");
+    return NSLocalizedString(@"Run This Script", @"Script path table header");
 }
 
 @end
