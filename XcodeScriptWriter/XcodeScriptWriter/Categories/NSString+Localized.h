@@ -14,5 +14,7 @@
 @interface NSString (Localized)
 
 + (NSString *)vok_pluginName;
++ (NSString *)vok_folderPath;
++ (NSString *)vok_scriptPath;
 
 @end

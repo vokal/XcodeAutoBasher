@@ -15,4 +15,14 @@
     return NSLocalizedString(@"XcodeScriptWriter", @"Name of plugin");
 }
 
++ (NSString *)vok_folderPath
+{
+    return NSLocalizedString(@"Folder Path", @"Folder Path table header");
+}
+
++ (NSString *)vok_scriptPath
+{
+    return NSLocalizedString(@"Script Path", @"Script path table header");
+}
+
 @end

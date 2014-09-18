@@ -11,6 +11,7 @@
 #import "NSString+Localized.h"
 #import "VOKDirectoryWatcher.h"
 #import "VOKScriptForFolder.h"
+#import "VOKScriptWriterWindowController.h"
 
 static VOKXcodeScriptWriter *sharedPlugin;
 
@@ -18,6 +19,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) NSMutableArray *folderObjects;
+@property (nonatomic, strong) VOKScriptWriterWindowController *windowController;
 
 @end
 
@@ -67,7 +69,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
         NSMenu *subMenu = [menuItem submenu];
         [subMenu addItem:[NSMenuItem separatorItem]];
         NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:[NSString vok_pluginName]
-                                                                action:@selector(doMenuAction)
+                                                                action:@selector(showEditWindow)
                                                          keyEquivalent:@""];
         [actionMenuItem setTarget:self];
         [subMenu addItem:actionMenuItem];
@@ -103,10 +105,15 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 #pragma mark - Actions
 
-- (void)doMenuAction
+- (void)showEditWindow
 {
-    NSAlert *alert = [NSAlert alertWithMessageText:@"CHECK YO CONSOLE" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-    [alert runModal];
+    if (!self.windowController) {
+        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle];
+    }
+    
+    NSLog(@"Window controller %@", self.windowController);
+    
+    [[self.windowController window] makeKeyAndOrderFront:self];
 }
 
 #pragma mark - VOKDirectoryWatcherDelegate
