@@ -69,6 +69,16 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 - (IBAction)removeItem:(id)sender
 {
     NSLog(@"REMOVE");
+    NSInteger removeMe = self.currentWatchesTableView.selectedRow;
+    if (removeMe < 0) {
+        //Nothing selected.
+        return;
+    }
+    
+    VOKScriptForFolder *removeScript = self.scripts[removeMe];
+    [self.delegate removeScript:removeScript];
+    [self.scripts removeObjectAtIndex:removeMe];
+    [self.currentWatchesTableView reloadData];
 }
 
 #pragma mark - NSTableViewDataSource

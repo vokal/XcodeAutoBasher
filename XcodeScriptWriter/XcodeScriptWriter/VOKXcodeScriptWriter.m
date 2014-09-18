@@ -15,7 +15,7 @@
 
 static VOKXcodeScriptWriter *sharedPlugin;
 
-@interface VOKXcodeScriptWriter() <VOKDirectoryWatcherDelegate>
+@interface VOKXcodeScriptWriter() <VOKDirectoryWatcherDelegate, VOKScriptWriterWindowDelegate>
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) NSMutableArray *folderObjects;
@@ -109,6 +109,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 {
     if (!self.windowController) {
         self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle andArray:self.folderObjects];
+        self.windowController.delegate = self;
     }
     
     NSLog(@"Window controller %@", self.windowController);
@@ -136,6 +137,18 @@ static VOKXcodeScriptWriter *sharedPlugin;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
     NSString *desktopPath = paths[0];
     return desktopPath;
+}
+
+#pragma mark - VOKScriptWriterWindowDelegate
+
+- (void)addScript:(VOKScriptForFolder *)scriptToAdd
+{
+    [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scriptToAdd.pathToFolder];
+}
+
+- (void)removeScript:(VOKScriptForFolder *)scriptToRemove
+{
+    [[VOKDirectoryWatcher sharedInstance] stopWatchingFolderWithPath:scriptToRemove.pathToFolder];
 }
 
 @end
