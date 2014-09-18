@@ -63,15 +63,18 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 
 - (IBAction)addItem:(id)sender
 {
-    NSLog(@"ADD");
+    VOKScriptForFolder *addScript = [[VOKScriptForFolder alloc] init];
+    [self.scripts addObject:addScript];
+    [self.delegate addScript:addScript];
+    [self.currentWatchesTableView reloadData];
 }
 
 - (IBAction)removeItem:(id)sender
 {
-    NSLog(@"REMOVE");
     NSInteger removeMe = self.currentWatchesTableView.selectedRow;
     if (removeMe < 0) {
         //Nothing selected.
+        [[NSSound soundNamed:@"Funk"] play];
         return;
     }
     
@@ -88,7 +91,9 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     return [self.scripts count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+- (id)tableView:(NSTableView *)tableView
+objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
+            row:(NSInteger)row
 {
     VOKScriptForFolder *scriptForFolder = self.scripts[row];
     
@@ -97,6 +102,28 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     } else {
         return scriptForFolder.pathToScript;
     }
+}
+
+#pragma mark - NSTableViewDelegate
+
+- (void)tableView:(NSTableView *)tableView
+   setObjectValue:(id)object
+   forTableColumn:(NSTableColumn *)tableColumn
+              row:(NSInteger)row
+{
+    NSString *string = (NSString *)object;
+    VOKScriptForFolder *scriptForFolder = self.scripts[row];
+    [self.delegate removeScript:scriptForFolder];
+    
+    if (tableColumn == self.folderColumn) {
+        scriptForFolder.pathToFolder = string;
+    } else {
+        scriptForFolder.pathToScript = string;
+    }
+    
+    NSLog(@"Script for folder: %@", scriptForFolder);
+    
+    [self.delegate addScript:scriptForFolder];
 }
 
 @end

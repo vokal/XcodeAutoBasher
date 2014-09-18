@@ -86,7 +86,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
     if (![folderObjects count]) {
         //Hard code some shit for testing.
         VOKScriptForFolder *scripty = [[VOKScriptForFolder alloc] init];
-        scripty.pathToFolder = [self desktopPath];
+        scripty.pathToFolder = [[self desktopPath] stringByAppendingPathComponent:@"FolderTests"];
         scripty.pathToScript = [[self desktopPath] stringByAppendingPathComponent:@"Basher.sh"];
         [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scripty.pathToFolder];
         [self.folderObjects addObject:scripty];
@@ -144,11 +144,13 @@ static VOKXcodeScriptWriter *sharedPlugin;
 - (void)addScript:(VOKScriptForFolder *)scriptToAdd
 {
     [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scriptToAdd.pathToFolder];
+    [self.folderObjects addObject:scriptToAdd];
 }
 
 - (void)removeScript:(VOKScriptForFolder *)scriptToRemove
 {
     [[VOKDirectoryWatcher sharedInstance] stopWatchingFolderWithPath:scriptToRemove.pathToFolder];
+    [self.folderObjects removeObject:scriptToRemove];
 }
 
 @end
