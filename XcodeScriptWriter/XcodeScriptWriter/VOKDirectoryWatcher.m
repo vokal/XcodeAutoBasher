@@ -62,6 +62,7 @@
 @property int directoryOpenedStatus;
 @property int kernelQueueStatus;
 @property CFFileDescriptorRef directoryKernelQueueRef;
+@property (nonatomic, readwrite) NSString *watchedPath;
 
 @end
 
@@ -91,11 +92,13 @@
 	VOKDirectoryWatcher *retVal = nil;
 	if ((watchDelegate != nil) && (watchPath != nil)) {
 		VOKDirectoryWatcher *tempManager = [[VOKDirectoryWatcher alloc] init];
-		tempManager.delegate = watchDelegate;		
+		tempManager.delegate = watchDelegate;
+        tempManager.watchedPath = watchPath;
 		if ([tempManager startMonitoringDirectory: watchPath]) {
 			// Everything appears to be in order, so return the DirectoryWatcher.  
 			// Otherwise we'll fall through and return NULL.
 			retVal = tempManager;
+            NSLog(@"Returning temp manager!");
 		}
 	}
 	return retVal;
@@ -137,26 +140,36 @@
 
 static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, void *info)
 {
+    NSLog(@"HIT CALLBACK!");
     VOKDirectoryWatcher *obj;
 	
     obj = (__bridge VOKDirectoryWatcher *)info;
     assert([obj isKindOfClass:[VOKDirectoryWatcher class]]);
     assert(kqRef == obj->_directoryKernelQueueRef);
     assert(callBackTypes == kCFFileDescriptorReadCallBack);
-	
+    
     [obj kernelQueueFired];
 }
 
 - (BOOL)startMonitoringDirectory:(NSString *)directoryPath
 {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:directoryPath]) {
+        NSLog(@"PATH NOT FOUND! %@", directoryPath);
+        return NO;
+    }
+    
+    
+    NSLog(@"Start monitoring %@", directoryPath);
 	// Double initializing is not going to work...
 	if ((self.directoryKernelQueueRef == NULL) && (self.directoryOpenedStatus == -1) && (self.kernelQueueStatus == -1)) {
 		// Open the directory we're going to watch
 		self.directoryOpenedStatus = open([directoryPath fileSystemRepresentation], O_EVTONLY);
 		if (self.directoryOpenedStatus >= 0) {
 			// Create a kqueue for our event messages...
+            NSLog(@"Directory was opened");
 			self.kernelQueueStatus = kqueue();
 			if (self.kernelQueueStatus >= 0) {
+                NSLog(@"Kernel Queue was created");
 				struct kevent eventToAdd;
 				eventToAdd.ident  = self.directoryOpenedStatus;
 				eventToAdd.filter = EVFILT_VNODE;
@@ -173,8 +186,10 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
 					// Passing true in the third argument so CFFileDescriptorInvalidate will close kq.
                     self.directoryKernelQueueRef = CFFileDescriptorCreate(NULL, self.kernelQueueStatus, true, KQCallback, &context);
 					if (self.directoryKernelQueueRef != NULL) {
+                        NSLog(@"Kernel Queue Ref was not null");
 						runLoopSource = CFFileDescriptorCreateRunLoopSource(NULL, self.directoryKernelQueueRef, 0);
 						if (runLoopSource != NULL) {
+                            NSLog(@"Run loop source was not null");
 							CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
 							CFRelease(runLoopSource);
 							CFFileDescriptorEnableCallBacks(self.directoryKernelQueueRef, kCFFileDescriptorReadCallBack);

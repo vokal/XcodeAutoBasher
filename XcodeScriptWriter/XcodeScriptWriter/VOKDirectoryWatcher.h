@@ -65,6 +65,7 @@
  */
 @interface VOKDirectoryWatcher : NSObject 
 
+@property (nonatomic, readonly) NSString *watchedPath;
 @property (nonatomic, weak) id <VOKDirectoryWatcherDelegate> delegate;
 
 + (VOKDirectoryWatcher *)watchFolderWithPath:(NSString *)watchPath delegate:(id<VOKDirectoryWatcherDelegate>)watchDelegate;
