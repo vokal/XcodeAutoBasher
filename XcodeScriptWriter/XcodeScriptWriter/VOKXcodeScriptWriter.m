@@ -8,6 +8,8 @@
 
 #import "VOKXcodeScriptWriter.h"
 
+#import "NSString+Localized.h"
+
 static VOKXcodeScriptWriter *sharedPlugin;
 
 @interface VOKXcodeScriptWriter()
@@ -37,17 +39,30 @@ static VOKXcodeScriptWriter *sharedPlugin;
         // Create menu items, initialize UI, etc.
 
         // Sample Menu Item:
-        NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"File"];
-        if (menuItem) {
-            [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-            NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Do Action" action:@selector(doMenuAction) keyEquivalent:@""];
-            [actionMenuItem setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem];
-        }
+        [self setupMenuItem];
     }
     return self;
 }
 
+#pragma mark - Setup
+
+- (void)setupMenuItem
+{
+    NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Window"];
+    if (menuItem) {
+        NSMenu *subMenu = [menuItem submenu];
+        [subMenu addItem:[NSMenuItem separatorItem]];
+        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:[NSString vok_pluginName]
+                                                                action:@selector(doMenuAction)
+                                                         keyEquivalent:@""];
+        [actionMenuItem setTarget:self];
+        [subMenu addItem:actionMenuItem];
+    } else {
+        NSLog(@"Menu item not found!");
+    }
+}
+
+#pragma mark - Actions
 // Sample Action, for menu item:
 - (void)doMenuAction
 {
