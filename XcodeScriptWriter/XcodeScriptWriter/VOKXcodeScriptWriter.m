@@ -32,7 +32,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
     if ([currentApplicationName isEqual:@"Xcode"]) {
         dispatch_once(&onceToken, ^{
             sharedPlugin = [[self alloc] initWithBundle:plugin];
-            sharedPlugin.folderObjects = [NSMutableArray array];
             [[VOKDirectoryWatcher sharedInstance] setDelegate:sharedPlugin];
         });
     }
@@ -42,8 +41,9 @@ static VOKXcodeScriptWriter *sharedPlugin;
 {
     if (self = [super init]) {
         // reference to plugin's bundle, for resource acccess
-        self.bundle = plugin;
-        
+        _bundle = plugin;
+        _folderObjects = [NSMutableArray array];
+
         // Create menu items, initialize UI, etc.
 
         // Sample Menu Item:
@@ -81,7 +81,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
     NSArray *folderObjects = [[NSUserDefaults standardUserDefaults] objectForKey:@"VOKXcodeScriptWriterObjects"];
 
     NSLog(@"Folder objects count: %@", @([folderObjects count]));
-    
     if (![folderObjects count]) {
         //Hard code some shit for testing.
         VOKScriptForFolder *scripty = [[VOKScriptForFolder alloc] init];
@@ -104,7 +103,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 #pragma mark - Actions
 
-// Sample Action, for menu item:
 - (void)doMenuAction
 {
     NSAlert *alert = [NSAlert alertWithMessageText:@"CHECK YO CONSOLE" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];

@@ -56,6 +56,11 @@ static VOKDirectoryWatcher *_sharedInstance;
     [self.queueueue removeAllPaths];
 }
 
+- (void)stopWatchingDirectory:(NSString *)directoryPath
+{
+    [self.queueueue removePath:directoryPath];
+}
+
 - (void)startMonitoringDirectory:(NSString *)directoryPath
 {
     [self.queueueue addPath:directoryPath];

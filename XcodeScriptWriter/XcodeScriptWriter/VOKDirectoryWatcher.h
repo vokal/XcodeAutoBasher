@@ -26,6 +26,7 @@
 + (VOKDirectoryWatcher *)sharedInstance;
 
 - (void)watchFolderWithPath:(NSString *)watchPath;
+- (void)stopWatchingDirectory:(NSString *)directoryPath;
 - (void)invalidate;
 
 @end

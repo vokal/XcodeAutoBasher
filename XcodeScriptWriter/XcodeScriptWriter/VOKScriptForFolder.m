@@ -29,4 +29,9 @@ static NSString *const FolderPathKey = @"folder_path";
     [coder encodeObject:self.pathToScript forKey:ScriptPathKey];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"\nFolder: %@\nScript: %@", self.pathToFolder, self.pathToScript];
+}
+
 @end
