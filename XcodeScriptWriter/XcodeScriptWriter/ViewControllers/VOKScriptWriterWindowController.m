@@ -33,6 +33,8 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 
 @property (nonatomic) NSMutableArray *scripts;
 
+@property (nonatomic, copy) NSString *lastChangedString;
+
 @end
 
 @implementation VOKScriptWriterWindowController
@@ -144,9 +146,11 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
         NSLog(@"Selected path: %@", path);
         switch (columnIndex) {
             case VOKTableColumnFolderPath:
+                self.lastChangedString = scriptForFolder.pathToFolder;
                 scriptForFolder.pathToFolder = path;
                 break;
             case VOKTableColumnScriptPath:
+                self.lastChangedString = scriptForFolder.pathToScript;
                 scriptForFolder.pathToScript = path;
                 break;
             default:
@@ -166,23 +170,29 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
    forTableColumn:(NSTableColumn *)tableColumn
               row:(NSInteger)row
 {
-    if (row > self.scripts.count - 1
-        || !object) {
+    if (row > self.scripts.count - 1) {
         //Bail out - something was editing as it was deleted and it'll crash if we try to edit it. 
         return;
     }
     
     VOKScriptForFolder *scriptForFolder = self.scripts[row];
-    [self.delegate removeScript:scriptForFolder];
     
     if ([object isKindOfClass:[NSString class]]) {
         NSString *string = (NSString *)object;
+        if ([string isEqualToString:self.lastChangedString]) {
+            //Bad data after change - bail.
+            return;
+        }
+        
+        [self.delegate removeScript:scriptForFolder];
+
         if (tableColumn == self.folderColumn) {
             scriptForFolder.pathToFolder = string;
         } else {
             scriptForFolder.pathToScript = string;
         }
     } else {
+        [self.delegate removeScript:scriptForFolder];
         NSNumber *number = (NSNumber *)object;
         scriptForFolder.shouldRecurse = [number boolValue];
     }
