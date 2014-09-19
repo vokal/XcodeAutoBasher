@@ -11,6 +11,11 @@
 static NSString *const ScriptPathKey = @"script_path";
 static NSString *const FolderPathKey = @"folder_path";
 
+@interface VOKScriptForFolder()
+@property (nonatomic) NSTimer *multipleStopper;
+
+@end
+
 @implementation VOKScriptForFolder
 
 #pragma mark - NSCoding
@@ -36,14 +41,26 @@ static NSString *const FolderPathKey = @"folder_path";
 - (BOOL)runScript
 {
     if (self.pathToScript) {
-        NSString *scriptDir = [self.pathToScript stringByDeletingLastPathComponent];
-        NSString *scriptFile = [self.pathToScript lastPathComponent];
-        NSString *bashCommand = [NSString stringWithFormat:@"bash %@", scriptFile];
-        [[self class] runCommand:bashCommand inDirectory:scriptDir];
+        [self.multipleStopper invalidate];
+        self.multipleStopper = [NSTimer scheduledTimerWithTimeInterval:1
+                                                                target:self
+                                                              selector:@selector(actuallyRunScript)
+                                                              userInfo:nil
+                                                               repeats:NO];
+
         return YES;
     } else {
         return NO;
     }
+}
+
+- (void)actuallyRunScript
+{
+    NSString *scriptDir = [self.pathToScript stringByDeletingLastPathComponent];
+    NSString *scriptFile = [self.pathToScript lastPathComponent];
+    NSString *bashCommand = [NSString stringWithFormat:@"bash %@", scriptFile];
+    [[self class] runCommand:bashCommand inDirectory:scriptDir];
+
 }
 
 + (NSString *)runCommand:(NSString *)commandToRun inDirectory:(NSString *)currentDirectoryPath

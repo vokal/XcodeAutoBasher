@@ -124,9 +124,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
     }
         
     NSInteger clicked = [panel runModal];
-    VOKScriptForFolder *scriptForFolder = self.scripts[rowIndex];
-    
     if (clicked == NSFileHandlingPanelOKButton) {
+        VOKScriptForFolder *scriptForFolder = self.scripts[rowIndex];
+        [self.delegate removeScript:scriptForFolder];
+        
         //Single select so only one item
         NSURL *url = [[panel URLs] firstObject];
         NSString *path = [url path];
@@ -142,6 +143,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
                 break;
         }
 
+        self.scripts[rowIndex] = scriptForFolder;
+        [self.delegate addScript:scriptForFolder];
         [self.currentWatchesTableView reloadData];
     }
 }

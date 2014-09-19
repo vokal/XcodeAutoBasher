@@ -44,10 +44,48 @@ static VOKDirectoryWatcher *_sharedInstance;
 	[self invalidate];
 }
 
+- (BOOL)isAssetCatalog:(NSString *)path
+{
+    NSString *lastPath = [path lastPathComponent];
+    NSLog(@"Extension %@", lastPath);
+    if ([lastPath rangeOfString:@".xcassets"].location != NSNotFound) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (NSArray *)allSubfoldersUnderPath:(NSString *)path
+{
+    NSDirectoryEnumerator *catalogEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:path];
+    
+    NSMutableArray *subfolders = [NSMutableArray array];
+    NSString *folder;
+    while (folder = [catalogEnumerator nextObject]) {
+        if (![folder hasSuffix:@".png"]
+            && ![folder hasSuffix:@".json"]
+            && ![folder hasSuffix:@".DS_STORE"]) {
+            [subfolders addObject:[path stringByAppendingPathComponent:folder]];
+        }
+    }
+    
+    return subfolders;
+}
+
 - (void)watchFolderWithPath:(NSString *)watchPath
 {
 	if (watchPath != nil) {
-		[self startMonitoringDirectory:watchPath];
+        if ([self isAssetCatalog:watchPath]) {
+            //DIVE DIVE DIVE
+            NSArray *subfolders = [self allSubfoldersUnderPath:watchPath];
+            NSLog(@"Subfolders: %@", subfolders);
+            for (NSString *subfolder in subfolders) {
+                [self startMonitoringDirectory:subfolder];
+            }
+        }
+        
+        //The top level dir should be watched either way.
+        [self startMonitoringDirectory:watchPath];
     }
 }
 
@@ -58,12 +96,25 @@ static VOKDirectoryWatcher *_sharedInstance;
 
 - (void)stopWatchingFolderWithPath:(NSString *)directoryPath
 {
-    [self.queueueue removePath:directoryPath];
+    if ([self isAssetCatalog:directoryPath]) {
+        NSArray *subfolders = [self allSubfoldersUnderPath:directoryPath];
+        NSLog(@"Subfolders: %@", subfolders);
+        for (NSString *subfolder in subfolders) {
+            [self stopMonitoringDirectory:subfolder];
+        }
+    }
+    
+    [self stopMonitoringDirectory:directoryPath];
 }
 
 - (void)startMonitoringDirectory:(NSString *)directoryPath
 {
     [self.queueueue addPath:directoryPath];
+}
+
+- (void)stopMonitoringDirectory:(NSString *)directoryPath
+{
+    [self.queueueue removePath:directoryPath];
 }
 
 #pragma mark - VDKQueueDelegate
