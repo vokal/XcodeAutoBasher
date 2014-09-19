@@ -101,6 +101,10 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
             row:(NSInteger)row
 {
+    if (row > [self.scripts count] - 1) {
+        return nil;
+    }
+    
     VOKScriptForFolder *scriptForFolder = self.scripts[row];
     
     if (tableColumn == self.folderColumn) {
