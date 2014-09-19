@@ -117,13 +117,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
     }
 }
 
-- (NSString *)desktopPath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
-    NSString *desktopPath = paths[0];
-    return desktopPath;
-}
-
 #pragma mark - VOKScriptWriterWindowDelegate
 
 - (void)addScript:(VOKScriptForFolder *)scriptToAdd

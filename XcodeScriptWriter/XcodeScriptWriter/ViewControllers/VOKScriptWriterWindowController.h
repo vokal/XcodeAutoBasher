@@ -14,13 +14,13 @@
 @required
 /**
  *  Called whenever a script is added through the UI and should be added to the watcher.
- *  @param scriptToAdd The script to add.
+ *  @param scriptToAdd The top-level folder script to add.
  */
 - (void)addScript:(VOKScriptForFolder *)scriptToAdd;
 
 /**
  *  Called whenever a script is removed via the UI and should be removed from the watcher.
- *  @param scriptToRemove The script to remove. 
+ *  @param scriptToRemove The top-level folder script to remove.
  */
 - (void)removeScript:(VOKScriptForFolder *)scriptToRemove;
 
@@ -28,6 +28,7 @@
 
 @interface VOKScriptWriterWindowController : NSWindowController
 
+///The delegate to notify 
 @property (nonatomic, weak) id<VOKScriptWriterWindowDelegate>delegate;
 
 /**

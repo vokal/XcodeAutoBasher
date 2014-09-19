@@ -12,6 +12,11 @@
 
 @protocol VOKDirectoryWatcherDelegate <NSObject>
 @required
+
+/**
+ *  Notifies the delegate that a given directory had changes.
+ *  @param directory The full path to the directory which changed.
+ */
 - (void)directoryDidChange:(NSString *)directory;
 
 @end
@@ -21,6 +26,7 @@
  */
 @interface VOKDirectoryWatcher : NSObject 
 
+///The delegate to notify of changes.
 @property (nonatomic, weak) id <VOKDirectoryWatcherDelegate> delegate;
 
 /**

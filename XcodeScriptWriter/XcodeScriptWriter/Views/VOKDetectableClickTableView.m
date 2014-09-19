@@ -12,7 +12,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    
+    //Ganked from: http://stackoverflow.com/a/19661253/681493
     NSPoint globalLocation = [theEvent locationInWindow];
     NSPoint localLocation = [self convertPoint:globalLocation fromView:nil];
     NSInteger clickedRow = [self rowAtPoint:localLocation];

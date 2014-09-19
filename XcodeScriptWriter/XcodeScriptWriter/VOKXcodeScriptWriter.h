@@ -8,6 +8,9 @@
 
 #import <AppKit/AppKit.h>
 
+/**
+ *  The main plugin class.
+ */
 @interface VOKXcodeScriptWriter : NSObject
 
 @end

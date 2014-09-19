@@ -10,6 +10,13 @@
 
 @protocol VOKMoarTableViewDelegate <NSObject>
 
+/**
+ *  Called whenever the user clicks within the table view.
+ *
+ *  @param tableView   The table view which was clicked
+ *  @param rowIndex    The index of the row where the click occurred
+ *  @param columnIndex The index of the column where the click occurred. 
+ */
 - (void)tableView:(NSTableView *)tableView didClickRow:(NSInteger)rowIndex inColumn:(NSInteger)columnIndex;
 
 @end
@@ -19,6 +26,9 @@
  */
 @interface VOKDetectableClickTableView : NSTableView
 
+/**
+ * Delegate for VOKMoarTableViewDelegate-specific calls.
+ */
 @property (nonatomic, weak) IBOutlet id<VOKMoarTableViewDelegate> moarDelegate;
 
 @end
