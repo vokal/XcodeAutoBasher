@@ -80,19 +80,12 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 - (void)loadExistingFolderWatchers
 {
-    NSArray *folderObjects = [[NSUserDefaults standardUserDefaults] objectForKey:@"VOKXcodeScriptWriterObjects"];
-    if (![folderObjects count]) {
-        //Hard code some shit for testing.
-        VOKScriptForFolder *scripty = [[VOKScriptForFolder alloc] init];
-        scripty.pathToFolder = [[self desktopPath] stringByAppendingPathComponent:@"FolderTests"];
-        scripty.pathToScript = [[self desktopPath] stringByAppendingPathComponent:@"Basher.sh"];
-        [self addScript:scripty];
-    } else {
-        //Add all the folders to the directory watcher.
-        for (VOKScriptForFolder *scriptForFolder in folderObjects) {
-            if ([scriptForFolder isKindOfClass:[VOKScriptForFolder class]]) {
-                [self addScript:scriptForFolder];
-            }
+    NSArray *folderObjects = [VOKScriptForFolder folderObjectsFromPlist];
+    
+    //Add all the folders to the directory watcher.
+    for (VOKScriptForFolder *scriptForFolder in folderObjects) {
+        if ([scriptForFolder isKindOfClass:[VOKScriptForFolder class]]) {
+            [self addScript:scriptForFolder];
         }
     }
 }
@@ -138,6 +131,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
     [[VOKDirectoryWatcher sharedInstance] watchFolder:scriptToAdd];
     [self.folderObjects addObject:scriptToAdd];
     [self.topLevelFolderObjects addObject:scriptToAdd];
+    [VOKScriptForFolder writeObjectsToPlist:self.topLevelFolderObjects];
     if (scriptToAdd.shouldRecurse) {
         NSArray *subfolders = [[VOKDirectoryWatcher sharedInstance] allSubfoldersUnderPath:scriptToAdd.pathToFolder];
         for (NSString *subfolder in subfolders) {
@@ -154,6 +148,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
     [[VOKDirectoryWatcher sharedInstance] stopWatchingFolder:scriptToRemove];
     [self.folderObjects removeObject:scriptToRemove];
     [self.topLevelFolderObjects removeObject:scriptToRemove];
+    [VOKScriptForFolder writeObjectsToPlist:self.topLevelFolderObjects];
     if (scriptToRemove.shouldRecurse) {
         NSArray *subfolders = [[VOKDirectoryWatcher sharedInstance] allSubfoldersUnderPath:scriptToRemove.pathToFolder];
         for (NSString *subfolder in subfolders) {

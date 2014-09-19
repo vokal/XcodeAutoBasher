@@ -19,4 +19,8 @@
  */
 - (BOOL)runScript;
 
++ (NSArray *)folderObjectsFromPlist;
+
++ (void)writeObjectsToPlist:(NSArray *)folderObjects;
+
 @end
