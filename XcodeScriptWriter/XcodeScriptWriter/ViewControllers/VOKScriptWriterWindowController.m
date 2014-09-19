@@ -14,6 +14,7 @@
 
 typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnFolderPath,
+    VOKTableColumnShouldRecurse,
     VOKTableColumnScriptPath,
     VOKTableColumnCount
 };
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 
 @property (nonatomic, weak) NSTableColumn *folderColumn;
 @property (nonatomic, weak) NSTableColumn *scriptColumn;
+@property (nonatomic, weak) NSTableColumn *shouldRecurseColumn;
 
 @property (nonatomic) NSMutableArray *scripts;
 
@@ -58,6 +60,8 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     [self.folderColumn.headerCell setStringValue:[NSString vok_folderPath]];
     self.scriptColumn = self.currentWatchesTableView.tableColumns[VOKTableColumnScriptPath];
     [self.scriptColumn.headerCell setStringValue:[NSString vok_scriptPath]];
+    self.shouldRecurseColumn = self.currentWatchesTableView.tableColumns[VOKTableColumnShouldRecurse];
+    [self.shouldRecurseColumn.headerCell setStringValue:[NSString vok_shouldRecurse]];
 }
 
 #pragma mark - IBActions
@@ -68,6 +72,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     [self.scripts addObject:addScript];
     [self.delegate addScript:addScript];
     [self.currentWatchesTableView reloadData];
+    [self.currentWatchesTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.scripts count] - 1] byExtendingSelection:NO];
 }
 
 - (IBAction)removeItem:(id)sender
@@ -100,6 +105,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
     
     if (tableColumn == self.folderColumn) {
         return scriptForFolder.pathToFolder;
+    } else if (tableColumn == self.shouldRecurseColumn) {
+        return @(scriptForFolder.shouldRecurse);
     } else {
         return scriptForFolder.pathToScript;
     }
@@ -109,14 +116,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
 {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     [panel setAllowsMultipleSelection:NO];
+    [panel setCanChooseFiles:YES];
 
     switch (columnIndex) {
         case VOKTableColumnFolderPath:
-            [panel setCanChooseFiles:NO];
             [panel setCanChooseDirectories:YES];
             break;
         case VOKTableColumnScriptPath:
-            [panel setCanChooseFiles:YES];
             [panel setCanChooseDirectories:NO];
             break;
         default:
@@ -156,14 +162,24 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
    forTableColumn:(NSTableColumn *)tableColumn
               row:(NSInteger)row
 {
-    NSString *string = (NSString *)object;
+    if (row > self.scripts.count - 1) {
+        //Bail out - something was editing as it was deleted and it'll crash if we try to edit it. 
+        return;
+    }
+    
     VOKScriptForFolder *scriptForFolder = self.scripts[row];
     [self.delegate removeScript:scriptForFolder];
     
-    if (tableColumn == self.folderColumn) {
-        scriptForFolder.pathToFolder = string;
+    if ([object isKindOfClass:[NSString class]]) {
+        NSString *string = (NSString *)object;
+        if (tableColumn == self.folderColumn) {
+            scriptForFolder.pathToFolder = string;
+        } else {
+            scriptForFolder.pathToScript = string;
+        }
     } else {
-        scriptForFolder.pathToScript = string;
+        NSNumber *number = (NSNumber *)object;
+        scriptForFolder.shouldRecurse = [number boolValue];
     }
     
     [self.delegate addScript:scriptForFolder];
@@ -173,7 +189,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
 
 - (void)tableView:(NSTableView *)tableView didClickRow:(NSInteger)rowIndex inColumn:(NSInteger)columnIndex
 {
-    [self openChooserForRow:rowIndex inColumn:columnIndex];
+    if (columnIndex != VOKTableColumnShouldRecurse) {
+        [self openChooserForRow:rowIndex inColumn:columnIndex];
+    }
 }
 
 @end

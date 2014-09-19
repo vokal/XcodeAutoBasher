@@ -10,6 +10,7 @@
 #import "VOKDirectoryWatcher.h"
 
 #import "VDKQueue.h"
+#import "VOKScriptForFolder.h"
 
 @interface VOKDirectoryWatcher() <VDKQueueDelegate>
 @property (nonatomic) VDKQueue *queueueue;
@@ -44,17 +45,6 @@ static VOKDirectoryWatcher *_sharedInstance;
 	[self invalidate];
 }
 
-- (BOOL)isAssetCatalog:(NSString *)path
-{
-    NSString *lastPath = [path lastPathComponent];
-    NSLog(@"Extension %@", lastPath);
-    if ([lastPath rangeOfString:@".xcassets"].location != NSNotFound) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 - (NSArray *)allSubfoldersUnderPath:(NSString *)path
 {
     NSDirectoryEnumerator *catalogEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:path];
@@ -62,9 +52,8 @@ static VOKDirectoryWatcher *_sharedInstance;
     NSMutableArray *subfolders = [NSMutableArray array];
     NSString *folder;
     while (folder = [catalogEnumerator nextObject]) {
-        if (![folder hasSuffix:@".png"]
-            && ![folder hasSuffix:@".json"]
-            && ![folder hasSuffix:@".DS_STORE"]) {
+        if ([[folder pathExtension] length] == 0
+            && ![folder hasSuffix:@".DS_Store"])  {
             [subfolders addObject:[path stringByAppendingPathComponent:folder]];
         }
     }
@@ -72,12 +61,12 @@ static VOKDirectoryWatcher *_sharedInstance;
     return subfolders;
 }
 
-- (void)watchFolderWithPath:(NSString *)watchPath
+- (void)watchFolder:(VOKScriptForFolder *)folder
 {
-	if (watchPath != nil) {
-        if ([self isAssetCatalog:watchPath]) {
+	if (folder != nil) {
+        if (folder.shouldRecurse) {
             //DIVE DIVE DIVE
-            NSArray *subfolders = [self allSubfoldersUnderPath:watchPath];
+            NSArray *subfolders = [self allSubfoldersUnderPath:folder.pathToFolder];
             NSLog(@"Subfolders: %@", subfolders);
             for (NSString *subfolder in subfolders) {
                 [self startMonitoringDirectory:subfolder];
@@ -85,7 +74,7 @@ static VOKDirectoryWatcher *_sharedInstance;
         }
         
         //The top level dir should be watched either way.
-        [self startMonitoringDirectory:watchPath];
+        [self startMonitoringDirectory:folder.pathToFolder];
     }
 }
 
@@ -94,27 +83,31 @@ static VOKDirectoryWatcher *_sharedInstance;
     [self.queueueue removeAllPaths];
 }
 
-- (void)stopWatchingFolderWithPath:(NSString *)directoryPath
+- (void)stopWatchingFolder:(VOKScriptForFolder *)folder
 {
-    if ([self isAssetCatalog:directoryPath]) {
-        NSArray *subfolders = [self allSubfoldersUnderPath:directoryPath];
+    if (folder.shouldRecurse) {
+        NSArray *subfolders = [self allSubfoldersUnderPath:folder.pathToFolder];
         NSLog(@"Subfolders: %@", subfolders);
         for (NSString *subfolder in subfolders) {
             [self stopMonitoringDirectory:subfolder];
         }
     }
     
-    [self stopMonitoringDirectory:directoryPath];
+    [self stopMonitoringDirectory:folder.pathToFolder];
 }
 
 - (void)startMonitoringDirectory:(NSString *)directoryPath
 {
-    [self.queueueue addPath:directoryPath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath]) {
+        [self.queueueue addPath:directoryPath];
+    }
 }
 
 - (void)stopMonitoringDirectory:(NSString *)directoryPath
 {
-    [self.queueueue removePath:directoryPath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath]) {
+        [self.queueueue removePath:directoryPath];
+    }
 }
 
 #pragma mark - VDKQueueDelegate

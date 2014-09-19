@@ -17,12 +17,17 @@
 
 + (NSString *)vok_folderPath
 {
-    return NSLocalizedString(@"Watch This Folder", @"Folder Path table header");
+    return NSLocalizedString(@"Watch This File or Folder", @"Folder Path table header");
 }
 
 + (NSString *)vok_scriptPath
 {
     return NSLocalizedString(@"Run This Script", @"Script path table header");
+}
+
++ (NSString *)vok_shouldRecurse
+{
+    return NSLocalizedString(@"Recursively?", @"Recursive checkbox table header");
 }
 
 @end

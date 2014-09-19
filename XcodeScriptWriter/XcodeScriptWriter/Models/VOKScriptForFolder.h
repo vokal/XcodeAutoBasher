@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VOKScriptForFolder : NSObject <NSCoding>
+@interface VOKScriptForFolder : NSObject
 
 @property (nonatomic) NSString *pathToFolder;
 @property (nonatomic) NSString *pathToScript;
+@property (nonatomic) BOOL shouldRecurse;
 
 /**
  * Runs the script in bash. 

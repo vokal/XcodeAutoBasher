@@ -19,6 +19,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) NSMutableArray *folderObjects;
+@property (nonatomic, strong) NSMutableArray *topLevelFolderObjects;
 @property (nonatomic, strong) VOKScriptWriterWindowController *windowController;
 
 @end
@@ -45,6 +46,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
         // reference to plugin's bundle, for resource acccess
         _bundle = plugin;
         _folderObjects = [NSMutableArray array];
+        _topLevelFolderObjects = [NSMutableArray array];
 
         // Create menu items, initialize UI, etc.
 
@@ -84,14 +86,12 @@ static VOKXcodeScriptWriter *sharedPlugin;
         VOKScriptForFolder *scripty = [[VOKScriptForFolder alloc] init];
         scripty.pathToFolder = [[self desktopPath] stringByAppendingPathComponent:@"FolderTests"];
         scripty.pathToScript = [[self desktopPath] stringByAppendingPathComponent:@"Basher.sh"];
-        [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scripty.pathToFolder];
-        [self.folderObjects addObject:scripty];
+        [self addScript:scripty];
     } else {
         //Add all the folders to the directory watcher.
         for (VOKScriptForFolder *scriptForFolder in folderObjects) {
             if ([scriptForFolder isKindOfClass:[VOKScriptForFolder class]]) {
-                [self.folderObjects addObject:scriptForFolder];
-                [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scriptForFolder.pathToFolder];
+                [self addScript:scriptForFolder];
             }
         }
     }
@@ -102,7 +102,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 - (void)showEditWindow
 {
     if (!self.windowController) {
-        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle andArray:self.folderObjects];
+        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle andArray:self.topLevelFolderObjects];
         self.windowController.delegate = self;
     }
     
@@ -135,14 +135,34 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 - (void)addScript:(VOKScriptForFolder *)scriptToAdd
 {
-    [[VOKDirectoryWatcher sharedInstance] watchFolderWithPath:scriptToAdd.pathToFolder];
+    [[VOKDirectoryWatcher sharedInstance] watchFolder:scriptToAdd];
     [self.folderObjects addObject:scriptToAdd];
+    [self.topLevelFolderObjects addObject:scriptToAdd];
+    if (scriptToAdd.shouldRecurse) {
+        NSArray *subfolders = [[VOKDirectoryWatcher sharedInstance] allSubfoldersUnderPath:scriptToAdd.pathToFolder];
+        for (NSString *subfolder in subfolders) {
+            VOKScriptForFolder *subfolderScript = [[VOKScriptForFolder alloc] init];
+            subfolderScript.pathToFolder = subfolder;
+            subfolderScript.pathToScript = scriptToAdd.pathToScript;
+            [self.folderObjects addObject:subfolderScript];
+        }
+    }
 }
 
 - (void)removeScript:(VOKScriptForFolder *)scriptToRemove
 {
-    [[VOKDirectoryWatcher sharedInstance] stopWatchingFolderWithPath:scriptToRemove.pathToFolder];
+    [[VOKDirectoryWatcher sharedInstance] stopWatchingFolder:scriptToRemove];
     [self.folderObjects removeObject:scriptToRemove];
+    [self.topLevelFolderObjects removeObject:scriptToRemove];
+    if (scriptToRemove.shouldRecurse) {
+        NSArray *subfolders = [[VOKDirectoryWatcher sharedInstance] allSubfoldersUnderPath:scriptToRemove.pathToFolder];
+        for (NSString *subfolder in subfolders) {
+            NSPredicate *subfolderPredicate = [NSPredicate predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(pathToFolder)), subfolder];
+            NSArray *found = [self.folderObjects filteredArrayUsingPredicate:subfolderPredicate];
+            VOKScriptForFolder *foundFolder = [found firstObject];
+            [self.folderObjects removeObject:foundFolder];
+        }
+    }
 }
 
 @end

@@ -18,24 +18,6 @@ static NSString *const FolderPathKey = @"folder_path";
 
 @implementation VOKScriptForFolder
 
-#pragma mark - NSCoding
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super init];
-    if (self) {
-        _pathToFolder = [coder decodeObjectForKey:FolderPathKey];
-        _pathToScript = [coder decodeObjectForKey:ScriptPathKey];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    [coder encodeObject:self.pathToFolder forKey:FolderPathKey];
-    [coder encodeObject:self.pathToScript forKey:ScriptPathKey];
-}
-
 #pragma mark - Running ye script
 
 - (BOOL)runScript
@@ -85,7 +67,7 @@ static NSString *const FolderPathKey = @"folder_path";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"\nFolder: %@\nScript: %@", self.pathToFolder, self.pathToScript];
+    return [NSString stringWithFormat:@"\nFolder: %@\nScript: %@\nShouldRecurse: %@", self.pathToFolder, self.pathToScript, self.shouldRecurse ? @"yes" : @"no"];
 }
 
 @end

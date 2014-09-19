@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class VOKDirectoryWatcher;
+@class VOKDirectoryWatcher, VOKScriptForFolder;
 
 @protocol VOKDirectoryWatcherDelegate <NSObject>
 @required
@@ -23,10 +23,34 @@
 
 @property (nonatomic, weak) id <VOKDirectoryWatcherDelegate> delegate;
 
+/**
+ *  @return Singleton instance.
+ */
 + (VOKDirectoryWatcher *)sharedInstance;
 
-- (void)watchFolderWithPath:(NSString *)watchPath;
-- (void)stopWatchingFolderWithPath:(NSString *)directoryPath;
+/**
+ *  Start watching a given folder.
+ *  @param folder The folder to watch.
+ */
+- (void)watchFolder:(VOKScriptForFolder *)folder;
+
+/**
+ *  Stop watching a given folder.
+ *  @param folder The folder to stop watching.
+ */
+- (void)stopWatchingFolder:(VOKScriptForFolder *)folder;
+
+/**
+ *  A list of the subfolders under a given path
+ *
+ *  @param path The path to grab the list of subfolders.
+ *  @return An array of strings representing the full paths of all subfolders.
+ */
+- (NSArray *)allSubfoldersUnderPath:(NSString *)path;
+
+/**
+ *  Kills directory watcher with fire.
+ */
 - (void)invalidate;
 
 @end

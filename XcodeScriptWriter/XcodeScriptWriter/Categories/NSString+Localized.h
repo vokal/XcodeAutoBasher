@@ -16,5 +16,6 @@
 + (NSString *)vok_pluginName;
 + (NSString *)vok_folderPath;
 + (NSString *)vok_scriptPath;
++ (NSString *)vok_shouldRecurse;
 
 @end
