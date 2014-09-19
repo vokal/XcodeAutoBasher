@@ -47,7 +47,6 @@ RIGHT NOW!!!
 Initially a [VOKAL](http://www.vokalinteractive.com) Hack Days Fall 2014 Project by [Ellen Shapiro](http://github.com/designatednerd). Open source contributions are encouraged!
 
 #//TODO: 
-- Fix fidgetyness with initially selecting a script or folder. 
 - Get plugin up on Alcatraz
 - Maybe eventually support things other than `bash`? Let me know if you're interested or if `bash` is sufficient to allow you to support whatever you need. 
 - ??? File an issue or put up a pull request!

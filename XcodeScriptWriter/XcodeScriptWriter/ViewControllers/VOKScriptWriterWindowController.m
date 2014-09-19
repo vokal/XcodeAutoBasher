@@ -180,7 +180,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
     
     if ([object isKindOfClass:[NSString class]]) {
         NSString *string = (NSString *)object;
-        if ([string isEqualToString:self.lastChangedString]) {
+        if ([string isEqualToString:self.lastChangedString]
+            || [string length] == 0) {
             //Bad data after change - bail.
             return;
         }
