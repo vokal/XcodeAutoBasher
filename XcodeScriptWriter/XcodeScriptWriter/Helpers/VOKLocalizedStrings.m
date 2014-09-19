@@ -1,31 +1,31 @@
 //
-//  NSString+Localized.m
+//  VOKLocalizedStrings.m
 //  XcodeScriptWriter
 //
-//  Created by Ellen Shapiro (Vokal) on 9/18/14.
+//  Created by Ellen Shapiro (Vokal) on 9/19/14.
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.
 //
 
-#import "NSString+Localized.h"
+#import "VOKLocalizedStrings.h"
 
-@implementation NSString (Localized)
+@implementation VOKLocalizedStrings
 
-+ (NSString *)vok_pluginName
++ (NSString *)pluginName
 {
     return NSLocalizedString(@"XcodeScriptWriter", @"Name of plugin");
 }
 
-+ (NSString *)vok_folderPath
++ (NSString *)folderPath
 {
     return NSLocalizedString(@"Watch This File or Folder", @"Folder Path table header");
 }
 
-+ (NSString *)vok_scriptPath
++ (NSString *)scriptPath
 {
     return NSLocalizedString(@"Run This Script", @"Script path table header");
 }
 
-+ (NSString *)vok_shouldRecurse
++ (NSString *)shouldRecurse
 {
     return NSLocalizedString(@"Recursively?", @"Recursive checkbox table header");
 }

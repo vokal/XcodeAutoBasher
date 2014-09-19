@@ -8,7 +8,7 @@
 
 #import "VOKScriptWriterWindowController.h"
 
-#import "NSString+Localized.h"
+#import "VOKLocalizedStrings.h"
 #import "VOKScriptForFolder.h"
 #import "VOKDetectableClickTableView.h"
 
@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     if (self = [super initWithWindowNibName:NSStringFromClass([self class])]) {
         _bundle = bundle;
         _scripts = [NSMutableArray arrayWithArray:scripts];
-        self.window.title = [NSString vok_pluginName];
+        self.window.title = [VOKLocalizedStrings pluginName];
     }
     return self;
 }
@@ -55,15 +55,15 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     NSString *version = [self.bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    self.versionTextField.stringValue = [NSString stringWithFormat:@"%@ v%@", [NSString vok_pluginName], version];
+    self.versionTextField.stringValue = [NSString stringWithFormat:@"%@ v%@", [VOKLocalizedStrings pluginName], version];
     
     //Give the columns titles
     self.folderColumn = self.currentWatchesTableView.tableColumns[VOKTableColumnFolderPath];
-    [self.folderColumn.headerCell setStringValue:[NSString vok_folderPath]];
+    [self.folderColumn.headerCell setStringValue:[VOKLocalizedStrings folderPath]];
     self.scriptColumn = self.currentWatchesTableView.tableColumns[VOKTableColumnScriptPath];
-    [self.scriptColumn.headerCell setStringValue:[NSString vok_scriptPath]];
+    [self.scriptColumn.headerCell setStringValue:[VOKLocalizedStrings scriptPath]];
     self.shouldRecurseColumn = self.currentWatchesTableView.tableColumns[VOKTableColumnShouldRecurse];
-    [self.shouldRecurseColumn.headerCell setStringValue:[NSString vok_shouldRecurse]];
+    [self.shouldRecurseColumn.headerCell setStringValue:[VOKLocalizedStrings shouldRecurse]];
 }
 
 #pragma mark - IBActions

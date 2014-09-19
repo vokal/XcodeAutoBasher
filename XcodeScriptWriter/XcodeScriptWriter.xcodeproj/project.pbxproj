@@ -12,7 +12,7 @@
 		3322919119CB1447003DDEDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3322918F19CB1447003DDEDC /* InfoPlist.strings */; };
 		3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */; };
 		33D682E419CB76BB0097DD08 /* VOKScriptForFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */; };
-		33E0503219CB6A70003289F8 /* NSString+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502719CB6A70003289F8 /* NSString+Localized.m */; };
+		33DCEDAB19CCDBCB00426A0E /* VOKLocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */; };
 		33E0503319CB6A70003289F8 /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502B19CB6A70003289F8 /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		33E0503419CB6A70003289F8 /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502E19CB6A70003289F8 /* VOKDirectoryWatcher.m */; };
 		33E0503B19CB6AB7003289F8 /* VOKScriptWriterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0503919CB6AB7003289F8 /* VOKScriptWriterWindowController.m */; };
@@ -31,8 +31,8 @@
 		3322919519CB1447003DDEDC /* XcodeScriptWriter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XcodeScriptWriter-Prefix.pch"; sourceTree = "<group>"; };
 		33D682E219CB76BB0097DD08 /* VOKScriptForFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptForFolder.h; sourceTree = "<group>"; };
 		33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptForFolder.m; sourceTree = "<group>"; };
-		33E0502619CB6A70003289F8 /* NSString+Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Localized.h"; sourceTree = "<group>"; };
-		33E0502719CB6A70003289F8 /* NSString+Localized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Localized.m"; sourceTree = "<group>"; };
+		33DCEDA919CCDBCB00426A0E /* VOKLocalizedStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKLocalizedStrings.h; sourceTree = "<group>"; };
+		33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKLocalizedStrings.m; sourceTree = "<group>"; };
 		33E0502A19CB6A70003289F8 /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
 		33E0502B19CB6A70003289F8 /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
 		33E0502D19CB6A70003289F8 /* VOKDirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDirectoryWatcher.h; sourceTree = "<group>"; };
@@ -92,6 +92,7 @@
 				33E0503D19CB6EDD003289F8 /* XcodeScriptWriter-Info.plist */,
 				33E0502519CB6A70003289F8 /* Categories */,
 				33E0502819CB6A70003289F8 /* Lib */,
+				33DCEDA819CCDBB700426A0E /* Helpers */,
 				33E0502C19CB6A70003289F8 /* ModelControllers */,
 				33E0503119CB6A70003289F8 /* Models */,
 				3322918D19CB1447003DDEDC /* Supporting Files */,
@@ -111,11 +112,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		33DCEDA819CCDBB700426A0E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				33DCEDA919CCDBCB00426A0E /* VOKLocalizedStrings.h */,
+				33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		33E0502519CB6A70003289F8 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				33E0502619CB6A70003289F8 /* NSString+Localized.h */,
-				33E0502719CB6A70003289F8 /* NSString+Localized.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -257,9 +265,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				33E0503B19CB6AB7003289F8 /* VOKScriptWriterWindowController.m in Sources */,
+				33DCEDAB19CCDBCB00426A0E /* VOKLocalizedStrings.m in Sources */,
 				33D682E419CB76BB0097DD08 /* VOKScriptForFolder.m in Sources */,
 				3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */,
-				33E0503219CB6A70003289F8 /* NSString+Localized.m in Sources */,
 				33E0503319CB6A70003289F8 /* VDKQueue.m in Sources */,
 				33FEA41F19CB99A200B7346F /* VOKDetectableClickTableView.m in Sources */,
 				33E0503419CB6A70003289F8 /* VOKDirectoryWatcher.m in Sources */,

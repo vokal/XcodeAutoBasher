@@ -8,7 +8,7 @@
 
 #import "VOKXcodeScriptWriter.h"
 
-#import "NSString+Localized.h"
+#import "VOKLocalizedStrings.h"
 #import "VOKDirectoryWatcher.h"
 #import "VOKScriptForFolder.h"
 #import "VOKScriptWriterWindowController.h"
@@ -70,7 +70,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
     if (menuItem) {
         NSMenu *subMenu = [menuItem submenu];
         [subMenu addItem:[NSMenuItem separatorItem]];
-        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:[NSString vok_pluginName]
+        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:[VOKLocalizedStrings pluginName]
                                                                 action:@selector(showEditWindow)
                                                          keyEquivalent:@""];
         [actionMenuItem setTarget:self];
