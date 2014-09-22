@@ -98,9 +98,9 @@ static NSString *const PlistFileName = @"TopLevelWatchedFolders.plist";
     }
 }
 
-+ (VOKScriptForFolder *)scriptFromDictionary:(NSDictionary *)dictionary
++ (instancetype)scriptFromDictionary:(NSDictionary *)dictionary
 {
-    VOKScriptForFolder *script = [[VOKScriptForFolder alloc] init];
+    VOKScriptForFolder *script = [[self alloc] init];
     script.pathToFolder = dictionary[FolderPathKey];
     script.pathToScript = dictionary[ScriptPathKey];
     script.shouldRecurse = [dictionary[ShouldRecurseKey] boolValue];
@@ -110,10 +110,10 @@ static NSString *const PlistFileName = @"TopLevelWatchedFolders.plist";
 - (NSDictionary *)dictionaryFromScript
 {
     return @{
-             ScriptPathKey : self.pathToScript ? self.pathToScript : @"",
-             FolderPathKey : self.pathToFolder ? self.pathToFolder : @"",
-             ShouldRecurseKey : @(self.shouldRecurse),
-            };
+             ScriptPathKey: self.pathToScript ? self.pathToScript : @"",
+             FolderPathKey: self.pathToFolder ? self.pathToFolder : @"",
+             ShouldRecurseKey: @(self.shouldRecurse),
+             };
 
 }
 

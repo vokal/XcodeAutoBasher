@@ -57,11 +57,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
     return self;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Setup
 
 - (void)setupMenuItem
