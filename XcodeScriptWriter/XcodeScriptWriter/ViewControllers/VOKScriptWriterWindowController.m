@@ -171,8 +171,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
    forTableColumn:(NSTableColumn *)tableColumn
               row:(NSInteger)row
 {
-    if (row >= self.scripts.count
-        || !object) {
+    if (!object
+        || row >= [self.scripts count]) {
         //Bail out - something was editing as it was deleted and it'll crash if we try to edit it. 
         return;
     }
