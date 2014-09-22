@@ -72,9 +72,12 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 - (IBAction)addItem:(id)sender
 {
     VOKScriptForFolder *addScript = [[VOKScriptForFolder alloc] init];
+    [self.currentWatchesTableView beginUpdates];
     [self.scripts addObject:addScript];
     [self.delegate addScript:addScript];
-    [self.currentWatchesTableView reloadData];
+    NSIndexSet *addedIndex = [NSIndexSet indexSetWithIndex:[self.scripts count] -1];
+    [self.currentWatchesTableView insertRowsAtIndexes:addedIndex withAnimation:NSTableViewAnimationEffectFade];
+    [self.currentWatchesTableView endUpdates];
     [self.currentWatchesTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.scripts count] - 1] byExtendingSelection:NO];
 }
 
@@ -88,9 +91,11 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     }
     
     VOKScriptForFolder *removeScript = self.scripts[removeMe];
+    [self.currentWatchesTableView beginUpdates];
     [self.delegate removeScript:removeScript];
     [self.scripts removeObjectAtIndex:removeMe];
-    [self.currentWatchesTableView reloadData];
+    [self.currentWatchesTableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:removeMe] withAnimation:NSTableViewAnimationEffectFade];
+    [self.currentWatchesTableView endUpdates];
 }
 
 #pragma mark - NSTableViewDataSource
@@ -139,6 +144,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
     NSInteger clicked = [panel runModal];
     if (clicked == NSFileHandlingPanelOKButton) {
         VOKScriptForFolder *scriptForFolder = self.scripts[rowIndex];
+        [self.currentWatchesTableView beginUpdates];
         [self.delegate removeScript:scriptForFolder];
         
         //Single select so only one item
@@ -160,7 +166,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
 
         self.scripts[rowIndex] = scriptForFolder;
         [self.delegate addScript:scriptForFolder];
-        [self.currentWatchesTableView reloadData];
+        [self.currentWatchesTableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] columnIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, VOKTableColumnScriptPath)]];
+        [self.currentWatchesTableView deselectRow:rowIndex];
+        [self.currentWatchesTableView endUpdates];
     }
 }
 
