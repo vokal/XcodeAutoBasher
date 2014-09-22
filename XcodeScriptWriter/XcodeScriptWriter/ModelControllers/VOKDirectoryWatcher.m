@@ -63,19 +63,7 @@ static VOKDirectoryWatcher *_sharedInstance;
 
 - (void)watchFolder:(VOKScriptForFolder *)folder
 {
-	if (folder != nil) {
-        if (folder.shouldRecurse) {
-            //DIVE DIVE DIVE
-            NSArray *subfolders = [self allSubfoldersUnderPath:folder.pathToFolder];
-            NSLog(@"Subfolders: %@", subfolders);
-            for (NSString *subfolder in subfolders) {
-                [self startMonitoringDirectory:subfolder];
-            }
-        }
-        
-        //The top level dir should be watched either way.
-        [self startMonitoringDirectory:folder.pathToFolder];
-    }
+    [self startMonitoringDirectory:folder.pathToFolder];
 }
 
 - (void)invalidate
@@ -85,14 +73,6 @@ static VOKDirectoryWatcher *_sharedInstance;
 
 - (void)stopWatchingFolder:(VOKScriptForFolder *)folder
 {
-    if (folder.shouldRecurse) {
-        NSArray *subfolders = [self allSubfoldersUnderPath:folder.pathToFolder];
-        NSLog(@"Subfolders: %@", subfolders);
-        for (NSString *subfolder in subfolders) {
-            [self stopMonitoringDirectory:subfolder];
-        }
-    }
-    
     [self stopMonitoringDirectory:folder.pathToFolder];
 }
 

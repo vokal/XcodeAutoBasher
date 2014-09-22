@@ -127,6 +127,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
             subfolderScript.pathToFolder = subfolder;
             subfolderScript.pathToScript = scriptToAdd.pathToScript;
             [self.folderObjects addObject:subfolderScript];
+            [[VOKDirectoryWatcher sharedInstance] watchFolder:subfolderScript];
         }
     }
 }
@@ -144,6 +145,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
             NSArray *found = [self.folderObjects filteredArrayUsingPredicate:subfolderPredicate];
             VOKScriptForFolder *foundFolder = [found firstObject];
             [self.folderObjects removeObject:foundFolder];
+            [[VOKDirectoryWatcher sharedInstance] stopWatchingFolder:foundFolder];
         }
     }
 }
