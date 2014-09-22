@@ -11,6 +11,7 @@
 		3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918A19CB1447003DDEDC /* Foundation.framework */; };
 		3322919119CB1447003DDEDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3322918F19CB1447003DDEDC /* InfoPlist.strings */; };
 		3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */; };
+		33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */; };
 		33D682E419CB76BB0097DD08 /* VOKScriptForFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */; };
 		33DCEDAB19CCDBCB00426A0E /* VOKLocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */; };
 		33E0503319CB6A70003289F8 /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502B19CB6A70003289F8 /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -29,6 +30,7 @@
 		3322919219CB1447003DDEDC /* VOKXcodeScriptWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKXcodeScriptWriter.h; sourceTree = "<group>"; };
 		3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKXcodeScriptWriter.m; sourceTree = "<group>"; };
 		3322919519CB1447003DDEDC /* XcodeScriptWriter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XcodeScriptWriter-Prefix.pch"; sourceTree = "<group>"; };
+		33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		33D682E219CB76BB0097DD08 /* VOKScriptForFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptForFolder.h; sourceTree = "<group>"; };
 		33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptForFolder.m; sourceTree = "<group>"; };
 		33DCEDA919CCDBCB00426A0E /* VOKLocalizedStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKLocalizedStrings.h; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */,
 				3322918919CB1447003DDEDC /* AppKit.framework in Frameworks */,
 				3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */,
 			);
@@ -78,6 +81,7 @@
 		3322918719CB1447003DDEDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */,
 				3322918819CB1447003DDEDC /* AppKit.framework */,
 				3322918A19CB1447003DDEDC /* Foundation.framework */,
 			);

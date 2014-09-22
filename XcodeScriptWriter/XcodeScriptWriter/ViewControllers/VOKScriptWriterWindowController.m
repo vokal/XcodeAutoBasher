@@ -11,6 +11,7 @@
 #import "VOKLocalizedStrings.h"
 #import "VOKScriptForFolder.h"
 #import "VOKDetectableClickTableView.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnFolderPath,
@@ -82,7 +83,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     NSInteger removeMe = self.currentWatchesTableView.selectedRow;
     if (removeMe < 0) {
         //Nothing selected.
-        [[NSSound soundNamed:@"Funk"] play];
+        AudioServicesPlayAlertSound(kSystemSoundID_UserPreferredAlert);
         return;
     }
     
