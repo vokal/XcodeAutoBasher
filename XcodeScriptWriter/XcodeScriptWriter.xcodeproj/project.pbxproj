@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3322918919CB1447003DDEDC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918819CB1447003DDEDC /* AppKit.framework */; };
+		3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918A19CB1447003DDEDC /* Foundation.framework */; };
+		3322919119CB1447003DDEDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3322918F19CB1447003DDEDC /* InfoPlist.strings */; };
+		3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */; };
+		33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */; };
+		33D682E419CB76BB0097DD08 /* VOKScriptForFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */; };
+		33DCEDAB19CCDBCB00426A0E /* VOKLocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */; };
+		33E0503319CB6A70003289F8 /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502B19CB6A70003289F8 /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		33E0503419CB6A70003289F8 /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0502E19CB6A70003289F8 /* VOKDirectoryWatcher.m */; };
+		33E0503B19CB6AB7003289F8 /* VOKScriptWriterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E0503919CB6AB7003289F8 /* VOKScriptWriterWindowController.m */; };
+		33E0503C19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33E0503A19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib */; };
+		33FEA41F19CB99A200B7346F /* VOKDetectableClickTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33FEA41E19CB99A200B7346F /* VOKDetectableClickTableView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3322918519CB1447003DDEDC /* XcodeScriptWriter.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeScriptWriter.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		3322918819CB1447003DDEDC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		3322918A19CB1447003DDEDC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3322918E19CB1447003DDEDC /* XcodeScriptWriter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XcodeScriptWriter-Info.plist"; sourceTree = "<group>"; };
+		3322919019CB1447003DDEDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3322919219CB1447003DDEDC /* VOKXcodeScriptWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKXcodeScriptWriter.h; sourceTree = "<group>"; };
+		3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKXcodeScriptWriter.m; sourceTree = "<group>"; };
+		3322919519CB1447003DDEDC /* XcodeScriptWriter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XcodeScriptWriter-Prefix.pch"; sourceTree = "<group>"; };
+		33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		33D682E219CB76BB0097DD08 /* VOKScriptForFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptForFolder.h; sourceTree = "<group>"; };
+		33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptForFolder.m; sourceTree = "<group>"; };
+		33DCEDA919CCDBCB00426A0E /* VOKLocalizedStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKLocalizedStrings.h; sourceTree = "<group>"; };
+		33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKLocalizedStrings.m; sourceTree = "<group>"; };
+		33E0502A19CB6A70003289F8 /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
+		33E0502B19CB6A70003289F8 /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
+		33E0502D19CB6A70003289F8 /* VOKDirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDirectoryWatcher.h; sourceTree = "<group>"; };
+		33E0502E19CB6A70003289F8 /* VOKDirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKDirectoryWatcher.m; sourceTree = "<group>"; };
+		33E0503819CB6AB7003289F8 /* VOKScriptWriterWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptWriterWindowController.h; sourceTree = "<group>"; };
+		33E0503919CB6AB7003289F8 /* VOKScriptWriterWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptWriterWindowController.m; sourceTree = "<group>"; };
+		33E0503A19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VOKScriptWriterWindowController.xib; sourceTree = "<group>"; };
+		33E0503D19CB6EDD003289F8 /* XcodeScriptWriter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "XcodeScriptWriter-Info.plist"; sourceTree = "<group>"; };
+		33FEA41D19CB99A200B7346F /* VOKDetectableClickTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDetectableClickTableView.h; sourceTree = "<group>"; };
+		33FEA41E19CB99A200B7346F /* VOKDetectableClickTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKDetectableClickTableView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3322918219CB1447003DDEDC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */,
+				3322918919CB1447003DDEDC /* AppKit.framework in Frameworks */,
+				3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3322917C19CB1447003DDEDC = {
+			isa = PBXGroup;
+			children = (
+				3322918C19CB1447003DDEDC /* XcodeScriptWriter */,
+				3322918719CB1447003DDEDC /* Frameworks */,
+				3322918619CB1447003DDEDC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3322918619CB1447003DDEDC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3322918519CB1447003DDEDC /* XcodeScriptWriter.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3322918719CB1447003DDEDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */,
+				3322918819CB1447003DDEDC /* AppKit.framework */,
+				3322918A19CB1447003DDEDC /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3322918C19CB1447003DDEDC /* XcodeScriptWriter */ = {
+			isa = PBXGroup;
+			children = (
+				3322919219CB1447003DDEDC /* VOKXcodeScriptWriter.h */,
+				3322919319CB1447003DDEDC /* VOKXcodeScriptWriter.m */,
+				33E0503D19CB6EDD003289F8 /* XcodeScriptWriter-Info.plist */,
+				33E0502519CB6A70003289F8 /* Categories */,
+				33E0502819CB6A70003289F8 /* Lib */,
+				33DCEDA819CCDBB700426A0E /* Helpers */,
+				33E0502C19CB6A70003289F8 /* ModelControllers */,
+				33E0503119CB6A70003289F8 /* Models */,
+				3322918D19CB1447003DDEDC /* Supporting Files */,
+				33E0503619CB6A85003289F8 /* ViewControllers */,
+				33E0503719CB6A85003289F8 /* Views */,
+			);
+			path = XcodeScriptWriter;
+			sourceTree = "<group>";
+		};
+		3322918D19CB1447003DDEDC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3322918E19CB1447003DDEDC /* XcodeScriptWriter-Info.plist */,
+				3322918F19CB1447003DDEDC /* InfoPlist.strings */,
+				3322919519CB1447003DDEDC /* XcodeScriptWriter-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		33DCEDA819CCDBB700426A0E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				33DCEDA919CCDBCB00426A0E /* VOKLocalizedStrings.h */,
+				33DCEDAA19CCDBCB00426A0E /* VOKLocalizedStrings.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		33E0502519CB6A70003289F8 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		33E0502819CB6A70003289F8 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				33E0502919CB6A70003289F8 /* VDKQueue */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		33E0502919CB6A70003289F8 /* VDKQueue */ = {
+			isa = PBXGroup;
+			children = (
+				33E0502A19CB6A70003289F8 /* VDKQueue.h */,
+				33E0502B19CB6A70003289F8 /* VDKQueue.m */,
+			);
+			path = VDKQueue;
+			sourceTree = "<group>";
+		};
+		33E0502C19CB6A70003289F8 /* ModelControllers */ = {
+			isa = PBXGroup;
+			children = (
+				33E0502D19CB6A70003289F8 /* VOKDirectoryWatcher.h */,
+				33E0502E19CB6A70003289F8 /* VOKDirectoryWatcher.m */,
+			);
+			path = ModelControllers;
+			sourceTree = "<group>";
+		};
+		33E0503119CB6A70003289F8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33D682E219CB76BB0097DD08 /* VOKScriptForFolder.h */,
+				33D682E319CB76BB0097DD08 /* VOKScriptForFolder.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		33E0503619CB6A85003289F8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				33E0503819CB6AB7003289F8 /* VOKScriptWriterWindowController.h */,
+				33E0503919CB6AB7003289F8 /* VOKScriptWriterWindowController.m */,
+				33E0503A19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		33E0503719CB6A85003289F8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				33FEA41D19CB99A200B7346F /* VOKDetectableClickTableView.h */,
+				33FEA41E19CB99A200B7346F /* VOKDetectableClickTableView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3322918419CB1447003DDEDC /* XcodeScriptWriter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3322919819CB1447003DDEDC /* Build configuration list for PBXNativeTarget "XcodeScriptWriter" */;
+			buildPhases = (
+				3322918119CB1447003DDEDC /* Sources */,
+				3322918219CB1447003DDEDC /* Frameworks */,
+				3322918319CB1447003DDEDC /* Resources */,
+				33C21E8E19CB1BEB0012443C /* Objclean Run Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XcodeScriptWriter;
+			productName = XcodeScriptWriter;
+			productReference = 3322918519CB1447003DDEDC /* XcodeScriptWriter.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3322917D19CB1447003DDEDC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VOK;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Vokal Interactive";
+			};
+			buildConfigurationList = 3322918019CB1447003DDEDC /* Build configuration list for PBXProject "XcodeScriptWriter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3322917C19CB1447003DDEDC;
+			productRefGroup = 3322918619CB1447003DDEDC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3322918419CB1447003DDEDC /* XcodeScriptWriter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3322918319CB1447003DDEDC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33E0503C19CB6AB7003289F8 /* VOKScriptWriterWindowController.xib in Resources */,
+				3322919119CB1447003DDEDC /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		33C21E8E19CB1BEB0012443C /* Objclean Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Objclean Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\"?!\"${SRCROOT}\"/XcodeScriptWriter/Lib/VDKQueue/VDKQueue.m\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3322918119CB1447003DDEDC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33E0503B19CB6AB7003289F8 /* VOKScriptWriterWindowController.m in Sources */,
+				33DCEDAB19CCDBCB00426A0E /* VOKLocalizedStrings.m in Sources */,
+				33D682E419CB76BB0097DD08 /* VOKScriptForFolder.m in Sources */,
+				3322919419CB1447003DDEDC /* VOKXcodeScriptWriter.m in Sources */,
+				33E0503319CB6A70003289F8 /* VDKQueue.m in Sources */,
+				33FEA41F19CB99A200B7346F /* VOKDetectableClickTableView.m in Sources */,
+				33E0503419CB6A70003289F8 /* VOKDirectoryWatcher.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3322918F19CB1447003DDEDC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3322919019CB1447003DDEDC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3322919619CB1447003DDEDC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3322919719CB1447003DDEDC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3322919919CB1447003DDEDC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "XcodeScriptWriter/XcodeScriptWriter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "XcodeScriptWriter/XcodeScriptWriter-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		3322919A19CB1447003DDEDC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "XcodeScriptWriter/XcodeScriptWriter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				INFOPLIST_FILE = "XcodeScriptWriter/XcodeScriptWriter-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3322918019CB1447003DDEDC /* Build configuration list for PBXProject "XcodeScriptWriter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3322919619CB1447003DDEDC /* Debug */,
+				3322919719CB1447003DDEDC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3322919819CB1447003DDEDC /* Build configuration list for PBXNativeTarget "XcodeScriptWriter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3322919919CB1447003DDEDC /* Debug */,
+				3322919A19CB1447003DDEDC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3322917D19CB1447003DDEDC /* Project object */;
+}
