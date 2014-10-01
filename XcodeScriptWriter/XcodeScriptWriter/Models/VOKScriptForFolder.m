@@ -137,29 +137,10 @@ static NSString *const PlistFileName = @"TopLevelWatchedFolders.plist";
 
 - (void)actuallyRunScript
 {
-    NSString *scriptDir = [self.pathToScript stringByDeletingLastPathComponent];
-    NSString *scriptFile = [self.pathToScript lastPathComponent];
-    NSString *bashCommand = [NSString stringWithFormat:@"bash %@", scriptFile];
-    [[self class] runCommand:bashCommand inDirectory:scriptDir];
-
-}
-
-+ (NSString *)runCommand:(NSString *)commandToRun inDirectory:(NSString *)currentDirectoryPath
-{
-    //Ganked from: http://stackoverflow.com/a/12310154/681493
     NSTask *task = [[NSTask alloc] init];
-    task.launchPath = @"/bin/sh";
-    task.currentDirectoryPath = currentDirectoryPath;
-    task.arguments = @[ @"-c",
-                        [NSString stringWithFormat:@"%@", commandToRun],
-                        ];
-    task.standardOutput = [NSPipe pipe];
-    NSFileHandle *file = [[NSPipe pipe] fileHandleForReading];
+    task.launchPath = self.pathToScript;
+    task.currentDirectoryPath = [self.pathToScript stringByDeletingLastPathComponent];
     [task launch];
-    
-    NSData *data = [file readDataToEndOfFile];
-    NSString *output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    return output;
 }
 
 #pragma mark - Description
