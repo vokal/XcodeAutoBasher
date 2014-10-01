@@ -20,7 +20,7 @@
 @property (nonatomic) BOOL shouldRecurse;
 
 /**
- * Runs the script in bash. 
+ * Runs the script. 
  */
 - (BOOL)runScript;
 
