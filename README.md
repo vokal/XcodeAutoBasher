@@ -37,7 +37,7 @@ After installing, once you restart Xcode, there will be a new option under the `
 3. Check the checkbox if you want to watch this folder recursively (ie, if you want to watch all of its children as well).
 4. Click in the area of the third column to bring up a file selection dialog where you can pick the script you want to run when a change is detected. 
 
-**Note**: You should verify your script runs via the Terminal *before* you try to add it to `XcodeScriptWriter` - this will significantly narrow down your "Is this plugin screwing up or is it me?" troubleshooting time.
+**Note**: You should verify your script runs via the Terminal *before* you try to add it to `XcodeScriptWriter`—this will significantly narrow down your "Is this plugin screwing up or is it me?" troubleshooting time.  Scripts should be executable on their own—that is, they should have the executable bit set (`chomod +x ...`) and the first line should be something like `#!/bin/bash` or `#!/usr/bin/env python` (a "[shebang](http://en.wikipedia.org/wiki/Shebang_(Unix))").
 
 
 #When
