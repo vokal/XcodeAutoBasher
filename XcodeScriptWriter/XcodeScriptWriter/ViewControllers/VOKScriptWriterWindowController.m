@@ -8,10 +8,11 @@
 
 #import "VOKScriptWriterWindowController.h"
 
-#import "VOKLocalizedStrings.h"
-#import "VOKScriptForFolder.h"
-#import "VOKDetectableClickTableView.h"
 #import <AudioToolbox/AudioToolbox.h>
+
+#import "VOKLocalizedStrings.h"
+#import "VOKProjectContainer.h"
+#import "VOKScriptForFolder.h"
 
 typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnFolderPath,
@@ -20,11 +21,14 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnCount
 };
 
-@interface VOKScriptWriterWindowController () <NSTableViewDelegate, NSTableViewDataSource, VOKMoarTableViewDelegate>
+@interface VOKScriptWriterWindowController ()
+
 @property (nonatomic, weak) IBOutlet NSTableView *currentWatchesTableView;
 @property (nonatomic, weak) IBOutlet NSButton *addButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteButton;
 @property (nonatomic, weak) IBOutlet NSTextField *versionTextField;
+
+@property (nonatomic, weak) IBOutlet NSTreeController *treeController;
 
 @property (nonatomic) NSBundle *bundle;
 
@@ -32,19 +36,21 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 @property (nonatomic, weak) NSTableColumn *scriptColumn;
 @property (nonatomic, weak) NSTableColumn *shouldRecurseColumn;
 
-@property (nonatomic) NSMutableArray *scripts;
-
 @property (nonatomic, copy) NSString *lastChangedString;
+
+@property (nonatomic, strong) NSArray *selectedIndexPaths;
+
+- (IBAction)selectFolder:(id)sender;
+- (IBAction)selectScript:(id)sender;
 
 @end
 
 @implementation VOKScriptWriterWindowController
 
-- (id)initWithBundle:(NSBundle *)bundle andArray:(NSArray *)scripts
+- (id)initWithBundle:(NSBundle *)bundle
 {
     if (self = [super initWithWindowNibName:NSStringFromClass([self class])]) {
         _bundle = bundle;
-        _scripts = [NSMutableArray arrayWithArray:scripts];
         self.window.title = [VOKLocalizedStrings pluginName];
     }
     return self;
@@ -67,157 +73,157 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     [self.shouldRecurseColumn.headerCell setStringValue:[VOKLocalizedStrings shouldRecurse]];
 }
 
-#pragma mark - IBActions
+#pragma mark - overridden setters/getters
 
-- (IBAction)addItem:(id)sender
+- (void)setProjects:(NSArray *)projects
 {
-    VOKScriptForFolder *addScript = [[VOKScriptForFolder alloc] init];
-    [self.currentWatchesTableView beginUpdates];
-    [self.scripts addObject:addScript];
-    [self.delegate addScript:addScript];
-    NSIndexSet *addedIndex = [NSIndexSet indexSetWithIndex:[self.scripts count] -1];
-    [self.currentWatchesTableView insertRowsAtIndexes:addedIndex withAnimation:NSTableViewAnimationEffectFade];
-    [self.currentWatchesTableView endUpdates];
-    [self.currentWatchesTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.scripts count] - 1] byExtendingSelection:NO];
+    _projects = projects;
+    NSLog(@"-=> setting self.projects: %@", projects);
+    self.selectedIndexPaths = self.selectedIndexPaths;
 }
 
-- (IBAction)removeItem:(id)sender
+- (void)setSelectedIndexPaths:(NSArray *)selectedIndexPaths
 {
-    NSInteger removeMe = self.currentWatchesTableView.selectedRow;
-    if (removeMe < 0) {
-        //Nothing selected.
-        AudioServicesPlayAlertSound(kSystemSoundID_UserPreferredAlert);
-        return;
+    _selectedIndexPaths = selectedIndexPaths;
+    VOKProjectScriptFolderTreeObject *selectedObject = [self selectedObject];
+    if (selectedObject) {
+        [self.addButton setEnabled:YES];
+        if ([selectedObject isKindOfClass:[VOKScriptForFolder class]]) {
+            [self.deleteButton setEnabled:YES];
+        } else {
+            [self.deleteButton setEnabled:NO];
+        }
+    } else {
+        // Nothing selected
+        [self.deleteButton setEnabled:NO];
+        [self.addButton setEnabled:NO];
     }
-    
-    VOKScriptForFolder *removeScript = self.scripts[removeMe];
-    [self.currentWatchesTableView beginUpdates];
-    [self.delegate removeScript:removeScript];
-    [self.scripts removeObjectAtIndex:removeMe];
-    [self.currentWatchesTableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:removeMe] withAnimation:NSTableViewAnimationEffectFade];
-    [self.currentWatchesTableView endUpdates];
 }
 
-#pragma mark - NSTableViewDataSource
+#pragma mark - helpers
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+- (VOKProjectScriptFolderTreeObject *)selectedObject
 {
-    return [self.scripts count];
+    NSArray *selectedObjects = self.treeController.selectedObjects;
+    if ([selectedObjects count] > 1) {
+        NSLog(@"How is more than 1 thing selected??");
+    }
+    return [selectedObjects firstObject];
 }
 
-- (id)tableView:(NSTableView *)tableView
-objectValueForTableColumn:(NSTableColumn *)tableColumn //SRSLY, alignment?
-            row:(NSInteger)row
+- (VOKScriptForFolder *)scriptForFolderFromSender:(id)sender
 {
-    if (row >= [self.scripts count]) {
+    if (![sender isKindOfClass:[NSView class]]) {
         return nil;
     }
-    
-    VOKScriptForFolder *scriptForFolder = self.scripts[row];
-    
-    if (tableColumn == self.folderColumn) {
-        return scriptForFolder.pathToFolder;
-    } else if (tableColumn == self.shouldRecurseColumn) {
-        return @(scriptForFolder.shouldRecurse);
-    } else {
-        return scriptForFolder.pathToScript;
+    NSView *senderView = sender;
+    if ([senderView respondsToSelector:@selector(objectValue)]) {
+        id objectValue = [(NSControl *)senderView objectValue];
+        if ([objectValue isKindOfClass:[VOKScriptForFolder class]]) {
+            return objectValue;
+        }
     }
+    if (senderView.superview) {
+        return [self scriptForFolderFromSender:senderView.superview];
+    }
+    return nil;
 }
 
-- (void)openChooserForRow:(NSInteger)rowIndex inColumn:(NSInteger)columnIndex;
+- (NSString *)modalChooserWithExistingSelection:(NSString *)existingSelection
+                           canChooseDirectories:(BOOL)canChooseDirectories
 {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     [panel setAllowsMultipleSelection:NO];
     [panel setCanChooseFiles:YES];
-
-    switch (columnIndex) {
-        case VOKTableColumnFolderPath:
-            [panel setCanChooseDirectories:YES];
-            break;
-        case VOKTableColumnScriptPath:
-            [panel setCanChooseDirectories:NO];
-            break;
-        default:
-            break;
-    }
-        
+    
+    [panel setDirectoryURL:[NSURL fileURLWithPath:[existingSelection stringByDeletingLastPathComponent]]];
+    [panel setCanChooseDirectories:canChooseDirectories];
+    
     NSInteger clicked = [panel runModal];
-    if (clicked == NSFileHandlingPanelOKButton) {
-        VOKScriptForFolder *scriptForFolder = self.scripts[rowIndex];
-        [self.currentWatchesTableView beginUpdates];
-        [self.delegate removeScript:scriptForFolder];
-        
-        //Single select so only one item
-        NSURL *url = [[panel URLs] firstObject];
-        NSString *path = [url path];
-        NSLog(@"Selected path: %@", path);
-        switch (columnIndex) {
-            case VOKTableColumnFolderPath:
-                self.lastChangedString = scriptForFolder.pathToFolder;
-                scriptForFolder.pathToFolder = path;
-                break;
-            case VOKTableColumnScriptPath:
-                self.lastChangedString = scriptForFolder.pathToScript;
-                scriptForFolder.pathToScript = path;
-                break;
-            default:
-                break;
-        }
-
-        self.scripts[rowIndex] = scriptForFolder;
-        [self.delegate addScript:scriptForFolder];
-        [self.currentWatchesTableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] columnIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, VOKTableColumnScriptPath)]];
-        [self.currentWatchesTableView deselectRow:rowIndex];
-        [self.currentWatchesTableView endUpdates];
+    if (clicked != NSFileHandlingPanelOKButton) {
+        return nil;
     }
+    
+    // Single select so only one item
+    NSURL *url = [[panel URLs] firstObject];
+    return [url path];
 }
 
-#pragma mark - NSTableViewDelegate
+#pragma mark - IBActions
 
-- (void)tableView:(NSTableView *)tableView
-   setObjectValue:(id)object
-   forTableColumn:(NSTableColumn *)tableColumn
-              row:(NSInteger)row
+- (IBAction)selectFolder:(id)sender
 {
-    if (!object
-        || row >= [self.scripts count]) {
-        //Bail out - something was editing as it was deleted and it'll crash if we try to edit it. 
+    VOKScriptForFolder *scriptForFolder = [self scriptForFolderFromSender:sender];
+    if (!scriptForFolder) {
         return;
     }
     
-    VOKScriptForFolder *scriptForFolder = self.scripts[row];
+    NSString *selectedUrl = [self modalChooserWithExistingSelection:scriptForFolder.pathToFolder
+                                               canChooseDirectories:YES];
     
-    if ([object isKindOfClass:[NSString class]]) {
-        NSString *string = (NSString *)object;
-        if ([string isEqualToString:self.lastChangedString]
-            || [string length] == 0) {
-            //Bad data after change - bail.
-            return;
-        }
-        
-        [self.delegate removeScript:scriptForFolder];
-
-        if (tableColumn == self.folderColumn) {
-            scriptForFolder.pathToFolder = string;
-        } else {
-            scriptForFolder.pathToScript = string;
-        }
-    } else {
-        [self.delegate removeScript:scriptForFolder];
-        NSNumber *number = (NSNumber *)object;
-        scriptForFolder.shouldRecurse = [number boolValue];
+    if (selectedUrl) {
+        scriptForFolder.pathToFolder = selectedUrl;
     }
-    
-    [self.delegate addScript:scriptForFolder];
 }
 
-#pragma mark - VOKMoarTableViewDelegate
-
-- (void)tableView:(NSTableView *)tableView didClickRow:(NSInteger)rowIndex inColumn:(NSInteger)columnIndex
+- (IBAction)selectScript:(id)sender
 {
-    if (columnIndex != VOKTableColumnShouldRecurse) {
-        [self openChooserForRow:rowIndex inColumn:columnIndex];
+    VOKScriptForFolder *scriptForFolder = [self scriptForFolderFromSender:sender];
+    if (!scriptForFolder) {
+        return;
     }
+    
+    NSString *selectedUrl = [self modalChooserWithExistingSelection:scriptForFolder.pathToScript
+                                               canChooseDirectories:NO];
+    
+    if (selectedUrl) {
+        scriptForFolder.pathToScript = selectedUrl;
+    }
+}
+
+- (IBAction)addItem:(id)sender
+{
+    VOKProjectScriptFolderTreeObject *selectedObject = [self selectedObject];
+    if (!selectedObject) {
+        // Nothing selected.
+        AudioServicesPlayAlertSound(kSystemSoundID_UserPreferredAlert);
+        return;
+    }
+    VOKProjectContainer *project = nil;
+    if ([selectedObject isKindOfClass:[VOKProjectContainer class]]) {
+        project = (VOKProjectContainer *)selectedObject;
+    } else if ([selectedObject respondsToSelector:@selector(containingProject)]) {
+        project = [(VOKScriptForFolder *)selectedObject containingProject];
+    }
+    if (!project) {
+        // Need a project to add a script.
+        AudioServicesPlayAlertSound(kSystemSoundID_UserPreferredAlert);
+        return;
+    }
+    VOKScriptForFolder *newScriptForFolder = [[VOKScriptForFolder alloc] init];
+    [project.topLevelFolderObjects addObject:newScriptForFolder];
+    newScriptForFolder.containingProject = project;
+    [project save];
+    [newScriptForFolder startWatching];
+    self.projects = self.projects;
+}
+
+- (IBAction)removeItem:(id)sender
+{
+    VOKProjectScriptFolderTreeObject *selectedObject = [self selectedObject];
+    if (!selectedObject) {
+        // Nothing selected.
+        AudioServicesPlayAlertSound(kSystemSoundID_UserPreferredAlert);
+        return;
+    }
+    if ([selectedObject isKindOfClass:[VOKProjectContainer class]]) {
+        // Can't remove a project.
+        AudioServicesPlayAlertSound(kSystemSoundID_UserPreferredAlert);
+        return;
+    }
+    VOKScriptForFolder *scriptForFolder = (VOKScriptForFolder *)selectedObject;
+    [scriptForFolder remove];
+    [self.treeController remove:sender];
 }
 
 @end
