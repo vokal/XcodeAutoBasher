@@ -40,7 +40,6 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
     if ([currentApplicationName isEqual:@"Xcode"]) {
         dispatch_once(&onceToken, ^{
             sharedPlugin = [[self alloc] initWithBundle:plugin];
-//            [[VOKDirectoryWatcher sharedInstance] setDelegate:sharedPlugin];
         });
     }
 }
@@ -55,11 +54,11 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
         _projects = [NSMutableDictionary dictionary];
 
         // Create menu items, initialize UI, etc.
-		[[NSNotificationCenter defaultCenter] addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didOpenProject:)
                                                      name:PBXProjectDidOpenNotification
                                                    object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(willCloseProject:)
                                                      name:PBXProjectWillCloseNotification
                                                    object:nil];
