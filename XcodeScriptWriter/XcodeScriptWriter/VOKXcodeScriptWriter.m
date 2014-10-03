@@ -26,6 +26,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 
 @end
 
+// Notification constants discovered using the techniques described in "Checking Available Events" from http://www.blackdogfoundry.com/blog/common-xcode4-plugin-techniques/
 static NSString *const PBXProjectDidOpenNotification = @"PBXProjectDidOpenNotification";
 static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNotification";
 
