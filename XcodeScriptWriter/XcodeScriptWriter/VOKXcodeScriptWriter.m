@@ -87,7 +87,6 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
     if ([project respondsToSelector:@selector(path)]) {
         NSString *projectPath = [project path];
         VOKProjectContainer *projectContainer = self.projects[projectPath];
-//        NSLog(@"-=> removing items: %@", self.topLevelFolderObjectsByProject[projectPath]);
         for (VOKScriptForFolder *scriptForFolder in projectContainer.topLevelFolderObjects) {
             [scriptForFolder stopWatching];
         }

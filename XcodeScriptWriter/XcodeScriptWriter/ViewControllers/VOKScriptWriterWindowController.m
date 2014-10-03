@@ -78,7 +78,6 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 - (void)setProjects:(NSArray *)projects
 {
     _projects = projects;
-    NSLog(@"-=> setting self.projects: %@", projects);
     self.selectedIndexPaths = self.selectedIndexPaths;
 }
 
@@ -130,13 +129,19 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 }
 
 - (NSString *)modalChooserWithExistingSelection:(NSString *)existingSelection
+                                      inProject:(VOKProjectContainer *)project
                            canChooseDirectories:(BOOL)canChooseDirectories
 {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     [panel setAllowsMultipleSelection:NO];
     [panel setCanChooseFiles:YES];
     
-    [panel setDirectoryURL:[NSURL fileURLWithPath:[existingSelection stringByDeletingLastPathComponent]]];
+    NSString *existingPath = [existingSelection stringByDeletingLastPathComponent];
+    if (existingPath) {
+        [panel setDirectoryURL:[NSURL fileURLWithPath:existingPath]];
+    } else if (project.containingPath) {
+        [panel setDirectoryURL:[NSURL fileURLWithPath:project.containingPath]];
+    }
     [panel setCanChooseDirectories:canChooseDirectories];
     
     NSInteger clicked = [panel runModal];
@@ -158,7 +163,8 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
         return;
     }
     
-    NSString *selectedUrl = [self modalChooserWithExistingSelection:scriptForFolder.pathToFolder
+    NSString *selectedUrl = [self modalChooserWithExistingSelection:scriptForFolder.absolutePathToFolder
+                                                          inProject:scriptForFolder.containingProject
                                                canChooseDirectories:YES];
     
     if (selectedUrl) {
@@ -173,7 +179,8 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
         return;
     }
     
-    NSString *selectedUrl = [self modalChooserWithExistingSelection:scriptForFolder.pathToScript
+    NSString *selectedUrl = [self modalChooserWithExistingSelection:scriptForFolder.absolutePathToScript
+                                                          inProject:scriptForFolder.containingProject
                                                canChooseDirectories:NO];
     
     if (selectedUrl) {

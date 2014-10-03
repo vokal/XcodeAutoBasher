@@ -34,12 +34,12 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 {
     [self.containingProject.directoryWatcher watchFolder:self];
     if (self.shouldRecurse) {
-        NSArray *subfolders = [self.containingProject.directoryWatcher allSubfoldersUnderPath:self.pathToFolder];
+        NSArray *subfolders = [self.containingProject.directoryWatcher allSubfoldersUnderPath:self.absolutePathToFolder];
         self.recursiveWatchers = [NSMutableArray arrayWithCapacity:[subfolders count]];
         for (NSString *subfolder in subfolders) {
             VOKScriptForFolder *subfolderScript = [[VOKScriptForFolder alloc] init];
             subfolderScript.pathToFolder = subfolder;
-            subfolderScript.pathToScript = self.pathToScript;
+            subfolderScript.pathToScript = self.absolutePathToScript;
             [self.recursiveWatchers addObject:subfolderScript];
             [self.containingProject.directoryWatcher watchFolder:subfolderScript];
         }
@@ -75,7 +75,7 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 - (void)setPathToFolder:(NSString *)pathToFolder
 {
     [self stopWatching];
-    [super setPathToFolder:pathToFolder];
+    [super setPathToFolder:[self.containingProject trimPathRelativeToProject:pathToFolder] ?: pathToFolder];
     [self.containingProject save];
     [self startWatching];
 }
@@ -83,9 +83,31 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 - (void)setPathToScript:(NSString *)pathToScript
 {
     [self stopWatching];
-    [super setPathToScript:pathToScript];
+    [super setPathToScript:[self.containingProject trimPathRelativeToProject:pathToScript] ?: pathToScript];
     [self.containingProject save];
     [self startWatching];
+}
+
+#pragma mark - readonly getters
+
+- (NSString *)absolutePathToFolder
+{
+    if (!self.containingProject) {
+        return self.pathToFolder;
+    }
+    NSURL *projectUrl = [NSURL fileURLWithPath:self.containingProject.containingPath];
+    NSURL *folderUrl = [NSURL URLWithString:self.pathToFolder relativeToURL:projectUrl];
+    return [folderUrl path];
+}
+
+- (NSString *)absolutePathToScript
+{
+    if (!self.containingProject) {
+        return self.pathToScript;
+    }
+    NSURL *projectUrl = [NSURL fileURLWithPath:self.containingProject.containingPath];
+    NSURL *scriptUrl = [NSURL URLWithString:self.pathToScript relativeToURL:projectUrl];
+    return [scriptUrl path];
 }
 
 #pragma mark - Loading and unloading zone
@@ -130,8 +152,8 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 - (void)actuallyRunScript
 {
     NSTask *task = [[NSTask alloc] init];
-    task.launchPath = self.pathToScript;
-    task.currentDirectoryPath = [self.pathToScript stringByDeletingLastPathComponent];
+    task.launchPath = self.absolutePathToScript;
+    task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
     [task launch];
 }
 

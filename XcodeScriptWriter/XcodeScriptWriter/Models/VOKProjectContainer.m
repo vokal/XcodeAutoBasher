@@ -38,6 +38,15 @@ static NSString *const PlistExtension = @"XcSW.plist";
             self.name, @([self.topLevelFolderObjects count])];
 }
 
+- (NSString *)trimPathRelativeToProject:(NSString *)absolutePath
+{
+    NSString *projectDirectoryPath = [self.containingPath stringByAppendingString:@"/"];
+    if (![absolutePath hasPrefix:projectDirectoryPath]) {
+        return absolutePath;
+    }
+    return [absolutePath substringFromIndex:projectDirectoryPath.length];
+}
+
 #pragma mark - load/save
 
 - (void)loadWatches
@@ -77,6 +86,11 @@ static NSString *const PlistExtension = @"XcSW.plist";
     return [self.pbxProject path];
 }
 
+- (NSString *)containingPath
+{
+    return [self.path stringByDeletingLastPathComponent];
+}
+
 - (NSString *)name
 {
     return [[self.path lastPathComponent] stringByDeletingPathExtension];
@@ -84,13 +98,12 @@ static NSString *const PlistExtension = @"XcSW.plist";
 
 - (NSString *)pathToFolder
 {
-    return [NSString stringWithFormat:@"%@ (%@)", self.name, [self.path stringByDeletingLastPathComponent]];
+    return [NSString stringWithFormat:@"%@ (%@)", self.name, self.containingPath];
 }
 
 - (NSString *)watchesFilePath
 {
-    return [[[self.path stringByDeletingLastPathComponent]
-             stringByAppendingPathComponent:self.name]
+    return [[self.containingPath stringByAppendingPathComponent:self.name]
             stringByAppendingPathExtension:PlistExtension];
 }
 
@@ -108,7 +121,7 @@ static NSString *const PlistExtension = @"XcSW.plist";
 - (void)directoryDidChange:(NSString *)path
 {
     NSPredicate *changedFolderPredicate = [NSPredicate predicateWithFormat:@"%@ BEGINSWITH %K",
-                                           path, NSStringFromSelector(@selector(pathToFolder))];
+                                           path, NSStringFromSelector(@selector(absolutePathToFolder))];
     NSArray *found = [self.topLevelFolderObjects filteredArrayUsingPredicate:changedFolderPredicate];
     if (![found count]) {
         NSLog(@"Found no paths matching %@ in %@.", path, self.name);
@@ -117,7 +130,7 @@ static NSString *const PlistExtension = @"XcSW.plist";
     
     VOKScriptForFolder *bestMatch = nil;
     for (VOKScriptForFolder *match in found) {
-        if (match.pathToFolder.length > bestMatch.pathToFolder.length) {
+        if (match.absolutePathToFolder.length > bestMatch.absolutePathToFolder.length) {
             bestMatch = match;
         }
     }
