@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3310C92919F94BCE008C16B9 /* VOKXcodeAutoBasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C92619F94BCE008C16B9 /* VOKXcodeAutoBasher.m */; };
+		3310C92A19F94BCE008C16B9 /* XcodeAutoBasher-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3310C92719F94BCE008C16B9 /* XcodeAutoBasher-Info.plist */; };
+		3310C94019F94BEC008C16B9 /* VOKLocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C92D19F94BEC008C16B9 /* VOKLocalizedStrings.m */; };
+		3310C94119F94BEC008C16B9 /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93119F94BEC008C16B9 /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3310C94219F94BEC008C16B9 /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93419F94BEC008C16B9 /* VOKDirectoryWatcher.m */; };
+		3310C94319F94BEC008C16B9 /* VOKProjectContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93719F94BEC008C16B9 /* VOKProjectContainer.m */; };
+		3310C94419F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93919F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.m */; };
+		3310C94519F94BEC008C16B9 /* VOKScriptForFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93B19F94BEC008C16B9 /* VOKScriptForFolder.m */; };
+		3310C94619F94BEC008C16B9 /* VOKScriptWriterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93E19F94BEC008C16B9 /* VOKScriptWriterWindowController.m */; };
+		3310C94719F94BEC008C16B9 /* VOKScriptWriterWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3310C93F19F94BEC008C16B9 /* VOKScriptWriterWindowController.xib */; };
+		3322918919CB1447003DDEDC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918819CB1447003DDEDC /* AppKit.framework */; };
+		3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918A19CB1447003DDEDC /* Foundation.framework */; };
+		33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3310C92519F94BCE008C16B9 /* VOKXcodeAutoBasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VOKXcodeAutoBasher.h; path = XcodeAutoBasher/VOKXcodeAutoBasher.h; sourceTree = SOURCE_ROOT; };
+		3310C92619F94BCE008C16B9 /* VOKXcodeAutoBasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VOKXcodeAutoBasher.m; path = XcodeAutoBasher/VOKXcodeAutoBasher.m; sourceTree = SOURCE_ROOT; };
+		3310C92719F94BCE008C16B9 /* XcodeAutoBasher-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "XcodeAutoBasher-Info.plist"; path = "XcodeAutoBasher/XcodeAutoBasher-Info.plist"; sourceTree = SOURCE_ROOT; };
+		3310C92819F94BCE008C16B9 /* XcodeAutoBasher-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XcodeAutoBasher-Prefix.pch"; path = "XcodeAutoBasher/XcodeAutoBasher-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		3310C92C19F94BEC008C16B9 /* VOKLocalizedStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKLocalizedStrings.h; sourceTree = "<group>"; };
+		3310C92D19F94BEC008C16B9 /* VOKLocalizedStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKLocalizedStrings.m; sourceTree = "<group>"; };
+		3310C93019F94BEC008C16B9 /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
+		3310C93119F94BEC008C16B9 /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
+		3310C93319F94BEC008C16B9 /* VOKDirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKDirectoryWatcher.h; sourceTree = "<group>"; };
+		3310C93419F94BEC008C16B9 /* VOKDirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKDirectoryWatcher.m; sourceTree = "<group>"; };
+		3310C93619F94BEC008C16B9 /* VOKProjectContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKProjectContainer.h; sourceTree = "<group>"; };
+		3310C93719F94BEC008C16B9 /* VOKProjectContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKProjectContainer.m; sourceTree = "<group>"; };
+		3310C93819F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKProjectScriptFolderTreeObject.h; sourceTree = "<group>"; };
+		3310C93919F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKProjectScriptFolderTreeObject.m; sourceTree = "<group>"; };
+		3310C93A19F94BEC008C16B9 /* VOKScriptForFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptForFolder.h; sourceTree = "<group>"; };
+		3310C93B19F94BEC008C16B9 /* VOKScriptForFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptForFolder.m; sourceTree = "<group>"; };
+		3310C93D19F94BEC008C16B9 /* VOKScriptWriterWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKScriptWriterWindowController.h; sourceTree = "<group>"; };
+		3310C93E19F94BEC008C16B9 /* VOKScriptWriterWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKScriptWriterWindowController.m; sourceTree = "<group>"; };
+		3310C93F19F94BEC008C16B9 /* VOKScriptWriterWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VOKScriptWriterWindowController.xib; sourceTree = "<group>"; };
+		3322918519CB1447003DDEDC /* XcodeAutoBasher.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodeAutoBasher.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		3322918819CB1447003DDEDC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		3322918A19CB1447003DDEDC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3322918219CB1447003DDEDC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */,
+				3322918919CB1447003DDEDC /* AppKit.framework in Frameworks */,
+				3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3310C92B19F94BEC008C16B9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3310C92C19F94BEC008C16B9 /* VOKLocalizedStrings.h */,
+				3310C92D19F94BEC008C16B9 /* VOKLocalizedStrings.m */,
+			);
+			name = Helpers;
+			path = XcodeAutoBasher/Helpers;
+			sourceTree = SOURCE_ROOT;
+		};
+		3310C92E19F94BEC008C16B9 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				3310C92F19F94BEC008C16B9 /* VDKQueue */,
+			);
+			name = Lib;
+			path = XcodeAutoBasher/Lib;
+			sourceTree = SOURCE_ROOT;
+		};
+		3310C92F19F94BEC008C16B9 /* VDKQueue */ = {
+			isa = PBXGroup;
+			children = (
+				3310C93019F94BEC008C16B9 /* VDKQueue.h */,
+				3310C93119F94BEC008C16B9 /* VDKQueue.m */,
+			);
+			path = VDKQueue;
+			sourceTree = "<group>";
+		};
+		3310C93219F94BEC008C16B9 /* ModelControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3310C93319F94BEC008C16B9 /* VOKDirectoryWatcher.h */,
+				3310C93419F94BEC008C16B9 /* VOKDirectoryWatcher.m */,
+			);
+			name = ModelControllers;
+			path = XcodeAutoBasher/ModelControllers;
+			sourceTree = SOURCE_ROOT;
+		};
+		3310C93519F94BEC008C16B9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3310C93619F94BEC008C16B9 /* VOKProjectContainer.h */,
+				3310C93719F94BEC008C16B9 /* VOKProjectContainer.m */,
+				3310C93819F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.h */,
+				3310C93919F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.m */,
+				3310C93A19F94BEC008C16B9 /* VOKScriptForFolder.h */,
+				3310C93B19F94BEC008C16B9 /* VOKScriptForFolder.m */,
+			);
+			name = Models;
+			path = XcodeAutoBasher/Models;
+			sourceTree = SOURCE_ROOT;
+		};
+		3310C93C19F94BEC008C16B9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3310C93D19F94BEC008C16B9 /* VOKScriptWriterWindowController.h */,
+				3310C93E19F94BEC008C16B9 /* VOKScriptWriterWindowController.m */,
+				3310C93F19F94BEC008C16B9 /* VOKScriptWriterWindowController.xib */,
+			);
+			name = ViewControllers;
+			path = XcodeAutoBasher/ViewControllers;
+			sourceTree = SOURCE_ROOT;
+		};
+		3322917C19CB1447003DDEDC = {
+			isa = PBXGroup;
+			children = (
+				3322918C19CB1447003DDEDC /* XcodeScriptWriter */,
+				3322918719CB1447003DDEDC /* Frameworks */,
+				3322918619CB1447003DDEDC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3322918619CB1447003DDEDC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3322918519CB1447003DDEDC /* XcodeAutoBasher.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3322918719CB1447003DDEDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */,
+				3322918819CB1447003DDEDC /* AppKit.framework */,
+				3322918A19CB1447003DDEDC /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3322918C19CB1447003DDEDC /* XcodeScriptWriter */ = {
+			isa = PBXGroup;
+			children = (
+				3310C92519F94BCE008C16B9 /* VOKXcodeAutoBasher.h */,
+				3310C92619F94BCE008C16B9 /* VOKXcodeAutoBasher.m */,
+				3310C92719F94BCE008C16B9 /* XcodeAutoBasher-Info.plist */,
+				3310C92819F94BCE008C16B9 /* XcodeAutoBasher-Prefix.pch */,
+				3310C92B19F94BEC008C16B9 /* Helpers */,
+				3310C92E19F94BEC008C16B9 /* Lib */,
+				3310C93219F94BEC008C16B9 /* ModelControllers */,
+				3310C93519F94BEC008C16B9 /* Models */,
+				3310C93C19F94BEC008C16B9 /* ViewControllers */,
+			);
+			path = XcodeScriptWriter;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3322918419CB1447003DDEDC /* XcodeAutoBasher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3322919819CB1447003DDEDC /* Build configuration list for PBXNativeTarget "XcodeAutoBasher" */;
+			buildPhases = (
+				3322918119CB1447003DDEDC /* Sources */,
+				3322918219CB1447003DDEDC /* Frameworks */,
+				3322918319CB1447003DDEDC /* Resources */,
+				33C21E8E19CB1BEB0012443C /* Objclean Run Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XcodeAutoBasher;
+			productName = XcodeScriptWriter;
+			productReference = 3322918519CB1447003DDEDC /* XcodeAutoBasher.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3322917D19CB1447003DDEDC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VOK;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Vokal Interactive";
+			};
+			buildConfigurationList = 3322918019CB1447003DDEDC /* Build configuration list for PBXProject "XcodeAutoBasher" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3322917C19CB1447003DDEDC;
+			productRefGroup = 3322918619CB1447003DDEDC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3322918419CB1447003DDEDC /* XcodeAutoBasher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3322918319CB1447003DDEDC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3310C94719F94BEC008C16B9 /* VOKScriptWriterWindowController.xib in Resources */,
+				3310C92A19F94BCE008C16B9 /* XcodeAutoBasher-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		33C21E8E19CB1BEB0012443C /* Objclean Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Objclean Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\necho \"SRCROOT is ${SRCROOT}\"\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\"?!\"${SRCROOT}\"/XcodeAutoBasher/Lib/VDKQueue/VDKQueue.m\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3322918119CB1447003DDEDC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3310C92919F94BCE008C16B9 /* VOKXcodeAutoBasher.m in Sources */,
+				3310C94519F94BEC008C16B9 /* VOKScriptForFolder.m in Sources */,
+				3310C94019F94BEC008C16B9 /* VOKLocalizedStrings.m in Sources */,
+				3310C94119F94BEC008C16B9 /* VDKQueue.m in Sources */,
+				3310C94319F94BEC008C16B9 /* VOKProjectContainer.m in Sources */,
+				3310C94419F94BEC008C16B9 /* VOKProjectScriptFolderTreeObject.m in Sources */,
+				3310C94619F94BEC008C16B9 /* VOKScriptWriterWindowController.m in Sources */,
+				3310C94219F94BEC008C16B9 /* VOKDirectoryWatcher.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3322919619CB1447003DDEDC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3322919719CB1447003DDEDC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3322919919CB1447003DDEDC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "XcodeAutoBasher/XcodeAutoBasher-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "XcodeAutoBasher/XcodeAutoBasher-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = XcodeAutoBasher;
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		3322919A19CB1447003DDEDC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "XcodeAutoBasher/XcodeAutoBasher-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				INFOPLIST_FILE = "XcodeAutoBasher/XcodeAutoBasher-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = XcodeAutoBasher;
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3322918019CB1447003DDEDC /* Build configuration list for PBXProject "XcodeAutoBasher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3322919619CB1447003DDEDC /* Debug */,
+				3322919719CB1447003DDEDC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3322919819CB1447003DDEDC /* Build configuration list for PBXNativeTarget "XcodeAutoBasher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3322919919CB1447003DDEDC /* Debug */,
+				3322919A19CB1447003DDEDC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3322917D19CB1447003DDEDC /* Project object */;
+}

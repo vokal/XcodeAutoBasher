@@ -11,6 +11,6 @@
 /**
  *  The main plugin class.
  */
-@interface VOKXcodeScriptWriter : NSObject
+@interface VOKXcodeAutoBasher : NSObject
 
 @end

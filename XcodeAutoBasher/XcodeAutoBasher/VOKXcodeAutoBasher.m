@@ -6,7 +6,7 @@
 //    Copyright (c) 2014 Vokal Interactive. All rights reserved.
 //
 
-#import "VOKXcodeScriptWriter.h"
+#import "VOKXcodeAutoBasher.h"
 
 #import "VOKLocalizedStrings.h"
 #import "VOKDirectoryWatcher.h"
@@ -14,9 +14,9 @@
 #import "VOKScriptForFolder.h"
 #import "VOKScriptWriterWindowController.h"
 
-static VOKXcodeScriptWriter *sharedPlugin;
+static VOKXcodeAutoBasher *sharedPlugin;
 
-@interface VOKXcodeScriptWriter()
+@interface VOKXcodeAutoBasher()
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) NSMutableArray *folderObjects;
@@ -30,7 +30,7 @@ static VOKXcodeScriptWriter *sharedPlugin;
 static NSString *const PBXProjectDidOpenNotification = @"PBXProjectDidOpenNotification";
 static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNotification";
 
-@implementation VOKXcodeScriptWriter
+@implementation VOKXcodeAutoBasher
 
 #pragma mark - Plugin Lifecycle 
 
