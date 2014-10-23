@@ -10,6 +10,8 @@
 
 #import "VOKDirectoryWatcher.h"
 #import "VOKProjectContainer.h"
+#import "VOKLocalizedStrings.h"
+#import <AppKit/AppKit.h>
 
 static NSString *const ScriptPathKey = @"script_path";
 static NSString *const FolderPathKey = @"folder_path";
@@ -151,10 +153,24 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 
 - (void)actuallyRunScript
 {
-    NSTask *task = [[NSTask alloc] init];
-    task.launchPath = self.absolutePathToScript;
-    task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
-    [task launch];
+    //Check if file is runnable or Xcode will crash
+    if ([[NSFileManager defaultManager] isExecutableFileAtPath:self.absolutePathToScript]) {
+        NSTask *task = [[NSTask alloc] init];
+        task.launchPath = self.absolutePathToScript;
+        task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
+        [task launch];
+    } else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:[VOKLocalizedStrings ok]];
+        [alert setMessageText:[VOKLocalizedStrings scriptNotExecutableTitle]];
+        NSString *informative = [NSString stringWithFormat:[VOKLocalizedStrings scriptNotExecutableMessageFormat], [self.absolutePathToScript lastPathComponent], [VOKLocalizedStrings pluginName]];
+        NSString *logoPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"xcab_logo" ofType:@"png"];
+        NSImage *logoImage = [[NSImage alloc] initWithContentsOfFile:logoPath];
+        [alert setIcon:logoImage];
+        [alert setInformativeText:informative];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    }
 }
 
 #pragma mark - Description

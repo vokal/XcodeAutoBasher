@@ -18,5 +18,8 @@
 + (NSString *)folderPath;
 + (NSString *)scriptPath;
 + (NSString *)shouldRecurse;
++ (NSString *)ok;
++ (NSString *)scriptNotExecutableTitle;
++ (NSString *)scriptNotExecutableMessageFormat;
 
 @end

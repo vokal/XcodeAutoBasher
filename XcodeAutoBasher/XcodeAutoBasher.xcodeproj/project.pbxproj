@@ -19,6 +19,7 @@
 		3322918919CB1447003DDEDC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918819CB1447003DDEDC /* AppKit.framework */; };
 		3322918B19CB1447003DDEDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3322918A19CB1447003DDEDC /* Foundation.framework */; };
 		33BA7DB919CF9FA200A5FB56 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */; };
+		33CDD4B819F978F00094F156 /* xcab_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CDD4B719F978F00094F156 /* xcab_logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		3322918819CB1447003DDEDC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		3322918A19CB1447003DDEDC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33BA7DB819CF9FA200A5FB56 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		33CDD4B719F978F00094F156 /* xcab_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = xcab_logo.png; path = XcodeAutoBasher/xcab_logo.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				3310C92619F94BCE008C16B9 /* VOKXcodeAutoBasher.m */,
 				3310C92719F94BCE008C16B9 /* XcodeAutoBasher-Info.plist */,
 				3310C92819F94BCE008C16B9 /* XcodeAutoBasher-Prefix.pch */,
+				33CDD4B719F978F00094F156 /* xcab_logo.png */,
 				3310C92B19F94BEC008C16B9 /* Helpers */,
 				3310C92E19F94BEC008C16B9 /* Lib */,
 				3310C93219F94BEC008C16B9 /* ModelControllers */,
@@ -222,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3310C94719F94BEC008C16B9 /* VOKAutoBasherWindowController.xib in Resources */,
+				33CDD4B819F978F00094F156 /* xcab_logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
