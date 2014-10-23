@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3310C92919F94BCE008C16B9 /* VOKXcodeAutoBasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C92619F94BCE008C16B9 /* VOKXcodeAutoBasher.m */; };
-		3310C92A19F94BCE008C16B9 /* XcodeAutoBasher-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3310C92719F94BCE008C16B9 /* XcodeAutoBasher-Info.plist */; };
 		3310C94019F94BEC008C16B9 /* VOKLocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C92D19F94BEC008C16B9 /* VOKLocalizedStrings.m */; };
 		3310C94119F94BEC008C16B9 /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93119F94BEC008C16B9 /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3310C94219F94BEC008C16B9 /* VOKDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3310C93419F94BEC008C16B9 /* VOKDirectoryWatcher.m */; };
@@ -128,7 +127,7 @@
 		3322917C19CB1447003DDEDC = {
 			isa = PBXGroup;
 			children = (
-				3322918C19CB1447003DDEDC /* XcodeScriptWriter */,
+				3322918C19CB1447003DDEDC /* XcodeAutoBasher */,
 				3322918719CB1447003DDEDC /* Frameworks */,
 				3322918619CB1447003DDEDC /* Products */,
 			);
@@ -152,7 +151,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3322918C19CB1447003DDEDC /* XcodeScriptWriter */ = {
+		3322918C19CB1447003DDEDC /* XcodeAutoBasher */ = {
 			isa = PBXGroup;
 			children = (
 				3310C92519F94BCE008C16B9 /* VOKXcodeAutoBasher.h */,
@@ -165,6 +164,7 @@
 				3310C93519F94BEC008C16B9 /* Models */,
 				3310C93C19F94BEC008C16B9 /* ViewControllers */,
 			);
+			name = XcodeAutoBasher;
 			path = XcodeScriptWriter;
 			sourceTree = "<group>";
 		};
@@ -222,7 +222,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3310C94719F94BEC008C16B9 /* VOKScriptWriterWindowController.xib in Resources */,
-				3310C92A19F94BCE008C16B9 /* XcodeAutoBasher-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +240,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\necho \"SRCROOT is ${SRCROOT}\"\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\"?!\"${SRCROOT}\"/XcodeAutoBasher/Lib/VDKQueue/VDKQueue.m\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
+			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\"?!\"${SRCROOT}\"/XcodeAutoBasher/Lib/VDKQueue\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
