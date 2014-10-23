@@ -270,6 +270,14 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ngj-Fj-A75">
+                        <rect key="frame" x="657" y="15" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="CuO-IM-q58"/>
+                            <constraint firstAttribute="height" constant="32" id="XE2-rX-ypD"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="xcab_logo" id="2u6-qf-l0h"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="P4O-g2-818" firstAttribute="leading" secondItem="8QB-qJ-4OM" secondAttribute="trailing" id="0Jy-nW-eMZ"/>
@@ -277,6 +285,8 @@
                     <constraint firstAttribute="trailing" secondItem="l4T-DQ-OvR" secondAttribute="trailing" constant="20" id="59V-pN-bi1"/>
                     <constraint firstItem="P4O-g2-818" firstAttribute="bottom" secondItem="8QB-qJ-4OM" secondAttribute="bottom" id="7J3-P5-5ka"/>
                     <constraint firstItem="P4O-g2-818" firstAttribute="top" secondItem="8QB-qJ-4OM" secondAttribute="top" id="BZw-pE-haH"/>
+                    <constraint firstItem="Ngj-Fj-A75" firstAttribute="top" secondItem="l4T-DQ-OvR" secondAttribute="bottom" constant="4" id="DBG-fe-VBc"/>
+                    <constraint firstItem="QNu-Cl-nm5" firstAttribute="leading" secondItem="Ngj-Fj-A75" secondAttribute="trailing" constant="8" id="JPw-ga-SwU"/>
                     <constraint firstAttribute="bottom" secondItem="QNu-Cl-nm5" secondAttribute="bottom" constant="20" id="SbA-ha-gdG"/>
                     <constraint firstItem="QNu-Cl-nm5" firstAttribute="top" secondItem="l4T-DQ-OvR" secondAttribute="bottom" constant="14" id="SoY-hg-ft1"/>
                     <constraint firstItem="l4T-DQ-OvR" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="Ttt-US-xlO"/>
@@ -296,4 +306,7 @@
             </connections>
         </treeController>
     </objects>
+    <resources>
+        <image name="xcab_logo" width="256" height="256"/>
+    </resources>
 </document>
