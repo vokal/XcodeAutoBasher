@@ -8,95 +8,109 @@
 
 #import "VOKScriptForFolder.h"
 
-static NSString *const TopLevelFoldersKey = @"top_level_folders";
+#import "VOKDirectoryWatcher.h"
+#import "VOKProjectContainer.h"
+
 static NSString *const ScriptPathKey = @"script_path";
 static NSString *const FolderPathKey = @"folder_path";
 static NSString *const ShouldRecurseKey = @"should_recurse";
-static NSString *const FolderName = @"XcodeScriptWriter";
-static NSString *const PlistFileName = @"TopLevelWatchedFolders.plist";
 
 @interface VOKScriptForFolder()
+
 @property (nonatomic) NSTimer *multipleStopper;
+
+@property (nonatomic) NSMutableArray *recursiveWatchers;
 
 @end
 
 @implementation VOKScriptForFolder
 
-#pragma mark - Loading and unloading zone
-
-+ (NSString *)plistPath
+- (BOOL)isScriptForFolder
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *applicationSupport = [paths firstObject];
-    
-    NSString *pluginFolderPath = [applicationSupport stringByAppendingPathComponent:FolderName];
-    
-    //Create folder if needed
-    if (![[NSFileManager defaultManager] fileExistsAtPath:pluginFolderPath]) {
-        NSError *folderCreationError;
-        [[NSFileManager defaultManager] createDirectoryAtPath:pluginFolderPath
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:&folderCreationError];
-        if (folderCreationError) {
-            NSLog(@"Error creating folder %@: %@", pluginFolderPath, folderCreationError);
-            return nil;
+    return YES;
+}
+
+- (void)startWatching
+{
+    [self.containingProject.directoryWatcher watchFolder:self];
+    if (self.shouldRecurse) {
+        NSArray *subfolders = [self.containingProject.directoryWatcher allSubfoldersUnderPath:self.absolutePathToFolder];
+        self.recursiveWatchers = [NSMutableArray arrayWithCapacity:[subfolders count]];
+        for (NSString *subfolder in subfolders) {
+            VOKScriptForFolder *subfolderScript = [[VOKScriptForFolder alloc] init];
+            subfolderScript.pathToFolder = subfolder;
+            subfolderScript.pathToScript = self.absolutePathToScript;
+            [self.recursiveWatchers addObject:subfolderScript];
+            [self.containingProject.directoryWatcher watchFolder:subfolderScript];
         }
     }
-    
-    NSString *plistPath = [pluginFolderPath stringByAppendingPathComponent:PlistFileName];
-    return plistPath;
 }
 
-+ (NSArray *)folderObjectsFromPlist
+- (void)stopWatching
 {
-    NSString *path = [self plistPath];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    if (!data) {
-        NSLog(@"No data found at path %@", path);
-        return nil;
+    [self.containingProject.directoryWatcher stopWatchingFolder:self];
+    for (VOKScriptForFolder *subfolderScript in self.recursiveWatchers) {
+        [self.containingProject.directoryWatcher stopWatchingFolder:subfolderScript];
     }
-    NSPropertyListFormat format;
-    NSError *plistReadError = nil;
-    NSDictionary *topLevelFolders = [NSPropertyListSerialization propertyListWithData:data
-                                                                              options:0
-                                                                               format:&format
-                                                                                error:&plistReadError];
-    
-    if (plistReadError) {
-        NSLog(@"Error reading in plist %@", plistReadError);
-    }
-
-    NSArray *folders = topLevelFolders[TopLevelFoldersKey];
-    NSMutableArray *objectFolders = [NSMutableArray array];
-    
-    for (NSDictionary *folderDict in folders) {
-        [objectFolders addObject:[self scriptFromDictionary:folderDict]];
-    }
-    
-    return objectFolders;
-
+    self.recursiveWatchers = nil;
 }
 
-+ (void)writeObjectsToPlist:(NSArray *)folderObjects
+- (void)remove
 {
-    NSMutableArray *dicts = [NSMutableArray array];
-    for (VOKScriptForFolder *script in folderObjects) {
-        [dicts addObject:[script dictionaryFromScript]];
-    }
-    
-    NSDictionary *topLevelFolders = @{ TopLevelFoldersKey : dicts };
-    NSString *plistErrorDescription = nil;
-    NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:topLevelFolders
-                                                                   format:NSPropertyListXMLFormat_v1_0
-                                                         errorDescription:&plistErrorDescription];
-    if (!plistErrorDescription) {
-        NSString *path = [self plistPath];
-        [plistData writeToFile:path atomically:YES];
-    } else {
-        NSLog(@"Error creating plist: %@", plistErrorDescription);
-    }
+    [self stopWatching];
+    [self.containingProject.topLevelFolderObjects removeObject:self];
+    [self.containingProject save];
 }
+
+#pragma mark - overridden setters
+
+- (void)setShouldRecurse:(BOOL)shouldRecurse
+{
+    [self stopWatching];
+    [super setShouldRecurse:shouldRecurse];
+    [self.containingProject save];
+    [self startWatching];
+}
+
+- (void)setPathToFolder:(NSString *)pathToFolder
+{
+    [self stopWatching];
+    [super setPathToFolder:[self.containingProject trimPathRelativeToProject:pathToFolder] ?: pathToFolder];
+    [self.containingProject save];
+    [self startWatching];
+}
+
+- (void)setPathToScript:(NSString *)pathToScript
+{
+    [self stopWatching];
+    [super setPathToScript:[self.containingProject trimPathRelativeToProject:pathToScript] ?: pathToScript];
+    [self.containingProject save];
+    [self startWatching];
+}
+
+#pragma mark - readonly getters
+
+- (NSString *)absolutePathToFolder
+{
+    if (!self.containingProject) {
+        return self.pathToFolder;
+    }
+    NSURL *projectUrl = [NSURL fileURLWithPath:self.containingProject.containingPath];
+    NSURL *folderUrl = [NSURL URLWithString:self.pathToFolder relativeToURL:projectUrl];
+    return [folderUrl path];
+}
+
+- (NSString *)absolutePathToScript
+{
+    if (!self.containingProject) {
+        return self.pathToScript;
+    }
+    NSURL *projectUrl = [NSURL fileURLWithPath:self.containingProject.containingPath];
+    NSURL *scriptUrl = [NSURL URLWithString:self.pathToScript relativeToURL:projectUrl];
+    return [scriptUrl path];
+}
+
+#pragma mark - Loading and unloading zone
 
 + (instancetype)scriptFromDictionary:(NSDictionary *)dictionary
 {
@@ -110,8 +124,8 @@ static NSString *const PlistFileName = @"TopLevelWatchedFolders.plist";
 - (NSDictionary *)dictionaryFromScript
 {
     return @{
-             ScriptPathKey: self.pathToScript ? self.pathToScript : @"",
-             FolderPathKey: self.pathToFolder ? self.pathToFolder : @"",
+             ScriptPathKey: self.pathToScript ?: @"",
+             FolderPathKey: self.pathToFolder ?: @"",
              ShouldRecurseKey: @(self.shouldRecurse),
              };
 
@@ -138,8 +152,8 @@ static NSString *const PlistFileName = @"TopLevelWatchedFolders.plist";
 - (void)actuallyRunScript
 {
     NSTask *task = [[NSTask alloc] init];
-    task.launchPath = self.pathToScript;
-    task.currentDirectoryPath = [self.pathToScript stringByDeletingLastPathComponent];
+    task.launchPath = self.absolutePathToScript;
+    task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
     [task launch];
 }
 

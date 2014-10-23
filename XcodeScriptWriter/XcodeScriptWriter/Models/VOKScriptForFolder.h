@@ -6,18 +6,29 @@
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "VOKProjectScriptFolderTreeObject.h"
 
-@interface VOKScriptForFolder : NSObject
+@class VOKProjectContainer;
 
-///The full path to the file or folder to be monitored.
+@interface VOKScriptForFolder : VOKProjectScriptFolderTreeObject
+
+///The path to the file or folder to be monitored (relative path when within the same folder as the containing project, otherwise absolute path).
 @property (nonatomic) NSString *pathToFolder;
 
-///The full path to the script which should run when a change occurs.
+///The path to the script which should run when a change occurs (relative path when within the same folder as the containing project, otherwise absolute path).
 @property (nonatomic) NSString *pathToScript;
+
+///The absolute path to the file or folder to be monitored.
+@property (nonatomic, readonly) NSString *absolutePathToFolder;
+
+///The absolute path to the script which should run when a change occurs.
+@property (nonatomic, readonly) NSString *absolutePathToScript;
 
 ///Whether the folder being watched should also have any child directorys watched. 
 @property (nonatomic) BOOL shouldRecurse;
+
+///The project-container object that contains this script-for-folder.
+@property (nonatomic, weak) VOKProjectContainer *containingProject;
 
 /**
  * Runs the script. 
@@ -25,15 +36,34 @@
 - (BOOL)runScript;
 
 /**
- *  Loads all the folder objects from a .plist stored in ~/Library/ApplicationSupport/XcodeScriptWriter.
- *  @return An array of the top-level folder objects being observed.
+ *  Construct a script-for-folder item from a serialized dictionary.
+ *
+ *  @param dictionary The dictionary containing the requisite values
+ *
+ *  @return The constructed VOKScriptForFolder item
  */
-+ (NSArray *)folderObjectsFromPlist;
++ (instancetype)scriptFromDictionary:(NSDictionary *)dictionary;
 
 /**
- *  Writes all the folder objects to a .plist stored in ~/Library/ApplicationSupport/XcodeScriptWriter.
- *  @param folderObjects An array of the top-level folder objects being observed.
+ *  Serialize the receiver into a dictionary.
+ *
+ *  @return The dictionary containing the values in the receiver
  */
-+ (void)writeObjectsToPlist:(NSArray *)folderObjects;
+- (NSDictionary *)dictionaryFromScript;
+
+/**
+ *  Start monitoring the specified folder and triggering the script on changes.
+ */
+- (void)startWatching;
+
+/**
+ *  Stop monitoring the specified folder.
+ */
+- (void)stopWatching;
+
+/**
+ *  Remove the script-for-folder entirely.
+ */
+- (void)remove;
 
 @end

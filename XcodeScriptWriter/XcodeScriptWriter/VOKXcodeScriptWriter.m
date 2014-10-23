@@ -10,19 +10,25 @@
 
 #import "VOKLocalizedStrings.h"
 #import "VOKDirectoryWatcher.h"
+#import "VOKProjectContainer.h"
 #import "VOKScriptForFolder.h"
 #import "VOKScriptWriterWindowController.h"
 
 static VOKXcodeScriptWriter *sharedPlugin;
 
-@interface VOKXcodeScriptWriter() <VOKDirectoryWatcherDelegate, VOKScriptWriterWindowDelegate>
+@interface VOKXcodeScriptWriter()
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) NSMutableArray *folderObjects;
-@property (nonatomic, strong) NSMutableArray *topLevelFolderObjects;
 @property (nonatomic, strong) VOKScriptWriterWindowController *windowController;
 
+@property (nonatomic, strong) NSMutableDictionary *projects;
+
 @end
+
+// Notification constants discovered using the techniques described in "Checking Available Events" from http://www.blackdogfoundry.com/blog/common-xcode4-plugin-techniques/
+static NSString *const PBXProjectDidOpenNotification = @"PBXProjectDidOpenNotification";
+static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNotification";
 
 @implementation VOKXcodeScriptWriter
 
@@ -35,7 +41,6 @@ static VOKXcodeScriptWriter *sharedPlugin;
     if ([currentApplicationName isEqual:@"Xcode"]) {
         dispatch_once(&onceToken, ^{
             sharedPlugin = [[self alloc] initWithBundle:plugin];
-            [[VOKDirectoryWatcher sharedInstance] setDelegate:sharedPlugin];
         });
     }
 }
@@ -46,15 +51,53 @@ static VOKXcodeScriptWriter *sharedPlugin;
         // reference to plugin's bundle, for resource acccess
         _bundle = plugin;
         _folderObjects = [NSMutableArray array];
-        _topLevelFolderObjects = [NSMutableArray array];
+        
+        _projects = [NSMutableDictionary dictionary];
 
         // Create menu items, initialize UI, etc.
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didOpenProject:)
+                                                     name:PBXProjectDidOpenNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(willCloseProject:)
+                                                     name:PBXProjectWillCloseNotification
+                                                   object:nil];
 
         // Sample Menu Item:
         [self setupMenuItem];
-        [self loadExistingFolderWatchers];
     }
     return self;
+}
+
+- (void)didOpenProject:(NSNotification *)projectNotification
+{
+    id<VOK_PBXProject> project = [projectNotification object];
+    VOKProjectContainer *projectContainer = [[VOKProjectContainer alloc] initWithPbxProject:project];
+    self.projects[projectContainer.path] = projectContainer;
+    for (VOKScriptForFolder *scriptForFolder in projectContainer.topLevelFolderObjects) {
+        [scriptForFolder startWatching];
+    }
+    self.windowController.projects = [self.projects allValues];
+}
+
+- (void)willCloseProject:(NSNotification *)projectNotification
+{
+    id<VOK_PBXProject> project = [projectNotification object];
+    if ([project respondsToSelector:@selector(path)]) {
+        NSString *projectPath = [project path];
+        VOKProjectContainer *projectContainer = self.projects[projectPath];
+        for (VOKScriptForFolder *scriptForFolder in projectContainer.topLevelFolderObjects) {
+            [scriptForFolder stopWatching];
+        }
+        [self.projects removeObjectForKey:projectPath];
+    }
+    self.windowController.projects = [self.projects allValues];
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Setup
@@ -73,81 +116,16 @@ static VOKXcodeScriptWriter *sharedPlugin;
     }
 }
 
-- (void)loadExistingFolderWatchers
-{
-    NSArray *folderObjects = [VOKScriptForFolder folderObjectsFromPlist];
-    
-    //Add all the folders to the directory watcher.
-    for (VOKScriptForFolder *scriptForFolder in folderObjects) {
-        if ([scriptForFolder isKindOfClass:[VOKScriptForFolder class]]) {
-            [self addScript:scriptForFolder];
-        }
-    }
-}
-
 #pragma mark - Actions
 
 - (void)showEditWindow
 {
     if (!self.windowController) {
-        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle andArray:self.topLevelFolderObjects];
-        self.windowController.delegate = self;
+        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle];
+        self.windowController.projects = [self.projects allValues];
     }
     
     [[self.windowController window] makeKeyAndOrderFront:self];
-}
-
-#pragma mark - VOKDirectoryWatcherDelegate
-
-- (void)directoryDidChange:(NSString *)path
-{
-    NSPredicate *changedFolderPredicate = [NSPredicate predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(pathToFolder)), path];
-    NSArray *found = [self.folderObjects filteredArrayUsingPredicate:changedFolderPredicate];
-    
-    if ([found count] == 1) {
-        VOKScriptForFolder *script = [found firstObject];
-        [script runScript];
-    } else {
-        NSLog(@"Found directory count is not 1, it is %@!", @([found count]));
-    }
-}
-
-#pragma mark - VOKScriptWriterWindowDelegate
-
-- (void)addScript:(VOKScriptForFolder *)scriptToAdd
-{
-    [[VOKDirectoryWatcher sharedInstance] watchFolder:scriptToAdd];
-    [self.folderObjects addObject:scriptToAdd];
-    [self.topLevelFolderObjects addObject:scriptToAdd];
-    [VOKScriptForFolder writeObjectsToPlist:self.topLevelFolderObjects];
-    if (scriptToAdd.shouldRecurse) {
-        NSArray *subfolders = [[VOKDirectoryWatcher sharedInstance] allSubfoldersUnderPath:scriptToAdd.pathToFolder];
-        for (NSString *subfolder in subfolders) {
-            VOKScriptForFolder *subfolderScript = [[VOKScriptForFolder alloc] init];
-            subfolderScript.pathToFolder = subfolder;
-            subfolderScript.pathToScript = scriptToAdd.pathToScript;
-            [self.folderObjects addObject:subfolderScript];
-            [[VOKDirectoryWatcher sharedInstance] watchFolder:subfolderScript];
-        }
-    }
-}
-
-- (void)removeScript:(VOKScriptForFolder *)scriptToRemove
-{
-    [[VOKDirectoryWatcher sharedInstance] stopWatchingFolder:scriptToRemove];
-    [self.folderObjects removeObject:scriptToRemove];
-    [self.topLevelFolderObjects removeObject:scriptToRemove];
-    [VOKScriptForFolder writeObjectsToPlist:self.topLevelFolderObjects];
-    if (scriptToRemove.shouldRecurse) {
-        NSArray *subfolders = [[VOKDirectoryWatcher sharedInstance] allSubfoldersUnderPath:scriptToRemove.pathToFolder];
-        for (NSString *subfolder in subfolders) {
-            NSPredicate *subfolderPredicate = [NSPredicate predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(pathToFolder)), subfolder];
-            NSArray *found = [self.folderObjects filteredArrayUsingPredicate:subfolderPredicate];
-            VOKScriptForFolder *foundFolder = [found firstObject];
-            [self.folderObjects removeObject:foundFolder];
-            [[VOKDirectoryWatcher sharedInstance] stopWatchingFolder:foundFolder];
-        }
-    }
 }
 
 @end
