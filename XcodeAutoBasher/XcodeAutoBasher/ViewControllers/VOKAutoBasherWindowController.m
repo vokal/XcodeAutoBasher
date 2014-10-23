@@ -1,12 +1,12 @@
 //
-//  VOKScriptWriterWindowController.m
-//  XcodeScriptWriter
+//  VOKAutoBasherWindowController.m
+//  XcodeAutoBasher
 //
 //  Created by Ellen Shapiro (Vokal) on 9/18/14.
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.
 //
 
-#import "VOKScriptWriterWindowController.h"
+#import "VOKAutoBasherWindowController.h"
 
 #import <AudioToolbox/AudioToolbox.h>
 
@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
     VOKTableColumnCount
 };
 
-@interface VOKScriptWriterWindowController ()
+@interface VOKAutoBasherWindowController ()
 
 @property (nonatomic, weak) IBOutlet NSTableView *currentWatchesTableView;
 @property (nonatomic, weak) IBOutlet NSButton *addButton;
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 
 @end
 
-@implementation VOKScriptWriterWindowController
+@implementation VOKAutoBasherWindowController
 
 - (id)initWithBundle:(NSBundle *)bundle
 {

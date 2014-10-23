@@ -1,6 +1,6 @@
 //
-//  VOKScriptWriterWindowController.h
-//  XcodeScriptWriter
+//  VOKAutoBasherWindowController.h
+//  XcodeAutoBasher
 //
 //  Created by Ellen Shapiro (Vokal) on 9/18/14.
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface VOKScriptWriterWindowController : NSWindowController
+@interface VOKAutoBasherWindowController : NSWindowController
 
 @property (nonatomic, strong) NSArray *projects;
 

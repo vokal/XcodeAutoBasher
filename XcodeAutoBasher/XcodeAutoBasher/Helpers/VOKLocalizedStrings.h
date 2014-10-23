@@ -1,6 +1,6 @@
 //
 //  VOKLocalizedStrings.h
-//  XcodeScriptWriter
+//  XcodeAutoBasher
 //
 //  Created by Ellen Shapiro (Vokal) on 9/19/14.
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.

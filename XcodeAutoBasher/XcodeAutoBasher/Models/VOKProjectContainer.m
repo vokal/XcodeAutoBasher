@@ -1,6 +1,6 @@
 //
 //  VOKProjectContainer.m
-//  XcodeScriptWriter
+//  XcodeAutoBasher
 //
 //  Created by Isaac Greenspan on 10/2/14.
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.
@@ -17,7 +17,7 @@
 
 @end
 
-static NSString *const PlistExtension = @"XcSW.plist";
+static NSString *const PlistExtension = @"XcAB.plist";
 
 @implementation VOKProjectContainer
 

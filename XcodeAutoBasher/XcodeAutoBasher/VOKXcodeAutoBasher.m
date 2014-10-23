@@ -1,6 +1,6 @@
 //
-//  VOKXcodeScriptWriter.m
-//  VOKXcodeScriptWriter
+//  VOKXcodeAutoBasher.m
+//  VOKXcodeAutoBasher
 //
 //  Created by Ellen Shapiro (Vokal) on 9/18/14.
 //    Copyright (c) 2014 Vokal Interactive. All rights reserved.
@@ -12,7 +12,7 @@
 #import "VOKDirectoryWatcher.h"
 #import "VOKProjectContainer.h"
 #import "VOKScriptForFolder.h"
-#import "VOKScriptWriterWindowController.h"
+#import "VOKAutoBasherWindowController.h"
 
 static VOKXcodeAutoBasher *sharedPlugin;
 
@@ -20,7 +20,7 @@ static VOKXcodeAutoBasher *sharedPlugin;
 
 @property (nonatomic, strong) NSBundle *bundle;
 @property (nonatomic, strong) NSMutableArray *folderObjects;
-@property (nonatomic, strong) VOKScriptWriterWindowController *windowController;
+@property (nonatomic, strong) VOKAutoBasherWindowController *windowController;
 
 @property (nonatomic, strong) NSMutableDictionary *projects;
 
@@ -121,7 +121,7 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
 - (void)showEditWindow
 {
     if (!self.windowController) {
-        self.windowController = [[VOKScriptWriterWindowController alloc] initWithBundle:self.bundle];
+        self.windowController = [[VOKAutoBasherWindowController alloc] initWithBundle:self.bundle];
         self.windowController.projects = [self.projects allValues];
     }
     
