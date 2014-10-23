@@ -45,7 +45,9 @@ After installing, once you restart Xcode, there will be a new option under the `
 5. A file will be added to the same folder as your `.xcodeproj` file, `[your project name].XcAB.plist`, which will store relative paths to each script within your project. This allows the `plist` files to be committed to version control so anyone opening the project can have this already set up. 
 
 ###Notes on Script Setup
-- Your scripts should be within the same directory structure as your `.xcodeproj` file, since this plugin will be looking for children of `SRCROOT`. This allows `XcodeAutoBasher` to only watch currently open projects, as well as allowing anyone who checks out your project to have `XcodeAutoBasher` work immediately.  
+- Your scripts should be within the same directory structure as your `.xcodeproj` file, since this plugin will be looking for children of the `.xcodeproj`'s parent folder. This allows `XcodeAutoBasher` to only watch currently open projects, as well as allowing anyone who checks out your project to have `XcodeAutoBasher` work immediately.
+
+-  Note that scripts outside this directory's children will be run, but on a shared project they will not work well since they will be saved with an absolute path, so they will only work on your machine. 
 
 - You should verify your script runs via the Terminal *before* you try to add it to `XcodeAutoBasher`—this will significantly narrow down your "Is this plugin screwing up or is it me?" troubleshooting time.  
 
@@ -57,7 +59,7 @@ After installing, once you restart Xcode, there will be a new option under the `
 RIGHT NOW!!!
 
 #Who
-Initially a [VOKAL](http://www.vokalinteractive.com) Hack Days Fall 2014 Project by [Ellen Shapiro](http://github.com/designatednerd). Massively improved by the desktop programming skillz of [Isaac Greenspan](http://github.com/ilg). 
+Initially a [VOKAL](http://www.vokalinteractive.com) Hack Days Fall 2014 Project by [Ellen Shapiro](http://github.com/designatednerd). Massively improved by the desktop programming skillz of [Isaac](http://github.com/ilg) [Greenspan](http://github.com/vokal-isaac). 
 
 Open source contributions are encouraged!
 
