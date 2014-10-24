@@ -59,8 +59,7 @@ typedef NS_ENUM(NSInteger, VOKTableColumns) {
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+
     NSString *version = [self.bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     self.versionTextField.stringValue = [NSString stringWithFormat:@"%@ v%@", [VOKLocalizedStrings pluginName], version];
     

@@ -123,7 +123,7 @@ static NSString *const PlistExtension = @"XcAB.plist";
     NSPredicate *changedFolderPredicate = [NSPredicate predicateWithFormat:@"%@ BEGINSWITH %K",
                                            path, NSStringFromSelector(@selector(absolutePathToFolder))];
     NSArray *found = [self.topLevelFolderObjects filteredArrayUsingPredicate:changedFolderPredicate];
-    if (![found count]) {
+    if (!found.count) {
         NSLog(@"Found no paths matching %@ in %@.", path, self.name);
         return;
     }

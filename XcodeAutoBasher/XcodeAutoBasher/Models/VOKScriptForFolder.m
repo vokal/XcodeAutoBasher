@@ -139,7 +139,7 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 {
     if (self.pathToScript) {
         [self.multipleStopper invalidate];
-        self.multipleStopper = [NSTimer scheduledTimerWithTimeInterval:1
+        self.multipleStopper = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                                 target:self
                                                               selector:@selector(actuallyRunScript)
                                                               userInfo:nil

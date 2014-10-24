@@ -54,7 +54,6 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
         
         _projects = [NSMutableDictionary dictionary];
 
-        // Create menu items, initialize UI, etc.
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didOpenProject:)
                                                      name:PBXProjectDidOpenNotification
