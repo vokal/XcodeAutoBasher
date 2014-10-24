@@ -1,6 +1,6 @@
 //
 //  VOKDirectoryWatcher.m
-//  VOKXcodeScriptWriter
+//  VOKXcodeAutoBasher
 //
 //  Created by Ellen Shapiro (Vokal) on 9/18/14.
 //  Copyright (c) 2014 Vokal Interactive. All rights reserved.
@@ -63,7 +63,7 @@ static VOKDirectoryWatcher *_sharedInstance;
 
 - (void)watchFolder:(VOKScriptForFolder *)folder
 {
-    [self startMonitoringDirectory:folder.pathToFolder];
+    [self startMonitoringDirectory:folder.absolutePathToFolder];
 }
 
 - (void)invalidate
@@ -73,7 +73,7 @@ static VOKDirectoryWatcher *_sharedInstance;
 
 - (void)stopWatchingFolder:(VOKScriptForFolder *)folder
 {
-    [self stopMonitoringDirectory:folder.pathToFolder];
+    [self stopMonitoringDirectory:folder.absolutePathToFolder];
 }
 
 - (void)startMonitoringDirectory:(NSString *)directoryPath
