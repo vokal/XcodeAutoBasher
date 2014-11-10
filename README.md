@@ -22,9 +22,9 @@ My idea was to create something that could do all of the following:
 The product of that thought process is `XcodeAutoBasher`. 
 
 #Where
-Eventually: [Alcatraz](http://alcatraz.io). 
+Installable via the [Alcatraz](http://alcatraz.io) package manager. 
 
-Until then (or if you hate convenience): 
+If you hate convenience: 
 
 1. Check out or download a .zip of the code. 
 2. Build and run. 
@@ -64,6 +64,5 @@ Initially a [VOKAL](http://www.vokalinteractive.com) Hack Days Fall 2014 Project
 Open source contributions are encouraged!
 
 #//TODO: 
-- Get plugin up on Alcatraz
 - Animate smashing of Xcode logo, because that would be awesome. 
 - ??? File an issue or put up a pull request!
