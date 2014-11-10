@@ -22,9 +22,9 @@ My idea was to create something that could do all of the following:
 The product of that thought process is `XcodeAutoBasher`. 
 
 #Where
-Eventually: [Alcatraz](http://alcatraz.io). 
+Installable via the [Alcatraz](http://alcatraz.io) package manager. 
 
-Until then (or if you hate convenience): 
+If you hate convenience: 
 
 1. Check out or download a .zip of the code. 
 2. Build and run. 
@@ -51,7 +51,7 @@ After installing, once you restart Xcode, there will be a new option under the `
 
 - You should verify your script runs via the Terminal *before* you try to add it to `XcodeAutoBasher`—this will significantly narrow down your "Is this plugin screwing up or is it me?" troubleshooting time.  
 
-- Scripts should be executable on their own—that is, they should have the executable bit set (`chmod +x ...`) and the first line should be something like `#!/bin/bash` or `#!/usr/bin/env python` (a "[shebang](http://en.wikipedia.org/wiki/Shebang_(Unix))").
+- Scripts should be executable on their own—that is, they should have the executable bit set (`chmod +x ...`) and the first line should be something like `#!/bin/bash` or `#!/usr/bin/env python` (a "[shebang](http://en.wikipedia.org/wiki/Shebang_(Unix)").
 
 - To see if a script is executable, cd into its directory and run `ls -la`. If the `x` bit is not set, run `chmod +x [filename]`, and then run `ls -la` again to verify the bit is now set. 
 
@@ -64,6 +64,5 @@ Initially a [VOKAL](http://www.vokalinteractive.com) Hack Days Fall 2014 Project
 Open source contributions are encouraged!
 
 #//TODO: 
-- Get plugin up on Alcatraz
 - Animate smashing of Xcode logo, because that would be awesome. 
 - ??? File an issue or put up a pull request!
