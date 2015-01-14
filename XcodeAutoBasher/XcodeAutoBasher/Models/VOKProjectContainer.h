@@ -3,7 +3,7 @@
 //  XcodeAutoBasher
 //
 //  Created by Isaac Greenspan on 10/2/14.
-//  Copyright (c) 2014 Vokal Interactive. All rights reserved.
+//  Copyright (c) 2014 Vokal. All rights reserved.
 //
 
 #import "VOKProjectScriptFolderTreeObject.h"

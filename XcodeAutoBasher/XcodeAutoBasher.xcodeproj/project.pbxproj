@@ -200,7 +200,7 @@
 			attributes = {
 				CLASSPREFIX = VOK;
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Vokal Interactive";
+				ORGANIZATIONNAME = "Vokal";
 			};
 			buildConfigurationList = 3322918019CB1447003DDEDC /* Build configuration list for PBXProject "XcodeAutoBasher" */;
 			compatibilityVersion = "Xcode 3.2";
