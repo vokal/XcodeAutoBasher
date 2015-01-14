@@ -15,7 +15,7 @@ I use several small convenience utilities that are run via shell script. I've pr
 
 My idea was to create something that could do all of the following: 
 
-- Watch the `.xcassets` folder recursively and run a script that fires off [Cat2Cat](http://github.com/vokalinteractive/Cat2Cat) whenever an `imageset` is added, removed, or renamed. 
+- Watch the `.xcassets` folder recursively and run a script that fires off [Cat2Cat](http://github.com/vokal/Cat2Cat) whenever an `imageset` is added, removed, or renamed. 
 - Watch the folder where all my Storyboards live and run a script that fires off [objc-identifierconstants](https://github.com/square/objc-codegenutils) when one of my storyboards is changed. 
 - Watch my `.xcdatamodeld` and fire off [MOGenerator](https://github.com/rentzsch/mogenerator) anytime a change to the data model is saved. 
 
@@ -59,7 +59,7 @@ After installing, once you restart Xcode, there will be a new option under the `
 RIGHT NOW!!!
 
 #Who
-Initially a [VOKAL](http://www.vokalinteractive.com) Hack Days Fall 2014 Project by [Ellen Shapiro](http://github.com/designatednerd). Massively improved by the desktop programming skillz of [Isaac](http://github.com/ilg) [Greenspan](http://github.com/vokal-isaac). 
+Initially a [Vokal](http://www.vokalinteractive.com) Hack Days Fall 2014 Project by [Ellen Shapiro](http://github.com/designatednerd). Massively improved by the desktop programming skillz of [Isaac](http://github.com/ilg) [Greenspan](http://github.com/vokal-isaac). 
 
 Open source contributions are encouraged!
 
