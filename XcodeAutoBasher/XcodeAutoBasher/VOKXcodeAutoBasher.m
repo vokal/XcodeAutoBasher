@@ -53,6 +53,11 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
         _folderObjects = [NSMutableArray array];
         
         _projects = [NSMutableDictionary dictionary];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidFinishLaunching:)
+                                                     name:NSApplicationDidFinishLaunchingNotification
+                                                   object:nil];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didOpenProject:)
@@ -67,6 +72,11 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
         [self setupMenuItem];
     }
     return self;
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification
+{
+    [self setupMenuItem];
 }
 
 - (void)didOpenProject:(NSNotification *)projectNotification
