@@ -67,9 +67,6 @@ static NSString *const PBXProjectWillCloseNotification = @"PBXProjectWillCloseNo
                                                  selector:@selector(willCloseProject:)
                                                      name:PBXProjectWillCloseNotification
                                                    object:nil];
-
-        // Sample Menu Item:
-        [self setupMenuItem];
     }
     return self;
 }
