@@ -32,8 +32,6 @@
  */
 @property (nonatomic, readonly) NSString *name;
 
-@property (nonatomic, strong) NSMutableArray *topLevelFolderObjects;
-
 - (instancetype)initWithPbxProject:(id<VOK_PBXProject>)pbxProject;
 
 - (void)save;
