@@ -12,20 +12,11 @@
 
 @interface VOKScriptForFolder : VOKProjectScriptFolderTreeObject
 
-///The path to the file or folder to be monitored (relative path when within the same folder as the containing project, otherwise absolute path).
-@property (nonatomic) NSString *pathToFolder;
-
-///The path to the script which should run when a change occurs (relative path when within the same folder as the containing project, otherwise absolute path).
-@property (nonatomic) NSString *pathToScript;
-
 ///The absolute path to the file or folder to be monitored.
 @property (nonatomic, readonly) NSString *absolutePathToFolder;
 
 ///The absolute path to the script which should run when a change occurs.
 @property (nonatomic, readonly) NSString *absolutePathToScript;
-
-///Whether the folder being watched should also have any child directorys watched. 
-@property (nonatomic) BOOL shouldRecurse;
 
 ///The project-container object that contains this script-for-folder.
 @property (nonatomic, weak) VOKProjectContainer *containingProject;
