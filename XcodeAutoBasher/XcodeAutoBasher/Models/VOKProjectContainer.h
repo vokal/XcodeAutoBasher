@@ -32,6 +32,14 @@
  */
 @property (nonatomic, readonly) NSString *name;
 
+/**
+ *  The build environment variables, as reported by `xcodebuild -showBuildSettings`, as an NSDictionary suitable for
+ *  use as an NSTask's environment property.
+ *
+ *  Note that this runs `xcodebuild` synchronously, so it's probably a bad idea to call it on the main thread.
+ */
+@property (nonatomic, readonly) NSDictionary *environmentVariables;
+
 - (instancetype)initWithPbxProject:(id<VOK_PBXProject>)pbxProject;
 
 - (void)save;

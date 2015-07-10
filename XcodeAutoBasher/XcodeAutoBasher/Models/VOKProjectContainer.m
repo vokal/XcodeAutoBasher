@@ -116,6 +116,52 @@ static NSString *const PlistExtension = @"XcAB.plist";
     return _directoryWatcher;
 }
 
+- (NSDictionary *)environmentVariables
+{
+    if ([NSThread isMainThread]) {
+        NSLog(@"VOKProjectContainer environmentVariables being retrieved on the main thread.");
+    }
+    NSPipe *outputPipe = [NSPipe pipe];
+    
+    NSTask *buildSettingsTask = [[NSTask alloc] init];
+    buildSettingsTask.launchPath = @"/usr/bin/xcodebuild";
+    buildSettingsTask.currentDirectoryPath = self.containingPath;
+    buildSettingsTask.arguments = @[ @"-showBuildSettings", ];
+    buildSettingsTask.standardOutput = outputPipe;
+    
+    [buildSettingsTask launch];
+    [buildSettingsTask waitUntilExit];
+    
+    NSData *outputData = [outputPipe.fileHandleForReading readDataToEndOfFile];
+    NSString *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
+    
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:
+                                  @"^[[:space:]]*([^[:space:]]*)[[:space:]]*=[[:space:]]*(.*)$"
+                                  options:NSRegularExpressionAnchorsMatchLines
+                                  error:&error];
+    if (!regex) {
+        NSLog(@"VOKProjectContainer error making regex: %@", error);
+        return nil;
+    }
+    
+    NSMutableDictionary *env = [NSMutableDictionary dictionary];
+    [regex
+     enumerateMatchesInString:outputString
+     options:NSMatchingReportProgress
+     range:NSMakeRange(0, outputString.length)
+     usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+         if (result.numberOfRanges != 3) {
+             return;
+         }
+         id key = [outputString substringWithRange:[result rangeAtIndex:1]];
+         id value = [outputString substringWithRange:[result rangeAtIndex:2]];
+         env[key] = value;
+     }];
+    return [env copy];
+}
+
 #pragma mark - VOKDirectoryWatcherDelegate methods
 
 - (void)directoryDidChange:(NSString *)path
