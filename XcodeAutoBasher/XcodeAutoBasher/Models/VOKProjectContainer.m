@@ -118,6 +118,7 @@ static NSString *const PlistExtension = @"XcAB.plist";
 
 - (NSDictionary *)environmentVariables
 {
+    NSAssert(![NSThread isMainThread], @"VOKProjectContainer environmentVariables being retrieved on the main thread.");
     if ([NSThread isMainThread]) {
         NSLog(@"VOKProjectContainer environmentVariables being retrieved on the main thread.");
     }
