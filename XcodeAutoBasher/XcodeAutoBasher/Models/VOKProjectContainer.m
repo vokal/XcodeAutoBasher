@@ -153,6 +153,9 @@ static NSString *const PlistExtension = @"XcAB.plist";
      options:NSMatchingReportProgress
      range:NSMakeRange(0, outputString.length)
      usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+         // In `result`, the 0th range is the range of the string that matches the whole regex and the 1st and 2nd
+         // ranges are the 1st and 2nd capture groups (the key and value), so there should be 3 ranges in the result--
+         // if there aren't, something's borked.
          if (result.numberOfRanges != 3) {
              return;
          }
