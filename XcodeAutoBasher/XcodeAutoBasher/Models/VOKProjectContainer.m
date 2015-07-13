@@ -159,9 +159,9 @@ static NSString *const PlistExtension = @"XcAB.plist";
          if (result.numberOfRanges != 3) {
              return;
          }
-         id key = [outputString substringWithRange:[result rangeAtIndex:1]];
-         id value = [outputString substringWithRange:[result rangeAtIndex:2]];
-         env[key] = value;
+         id variableName = [outputString substringWithRange:[result rangeAtIndex:1]];
+         id variableValue = [outputString substringWithRange:[result rangeAtIndex:2]];
+         env[variableName] = variableValue;
      }];
     return [env copy];
 }
