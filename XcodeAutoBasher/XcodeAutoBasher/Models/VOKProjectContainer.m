@@ -136,6 +136,12 @@ static NSString *const PlistExtension = @"XcAB.plist";
     NSData *outputData = [outputPipe.fileHandleForReading readDataToEndOfFile];
     NSString *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
     
+    /*
+     *  The output of `xcodebuild -showBuildSettings` is primarily lines of the form
+     *      [whitespace][key][whitespace]=[whitespace][value]
+     *  so we'll use a regular expression to capture each key and value pair in this format, assuming that the key 
+     *  won't have any whitespace (shell variable names shouldn't).
+     */
     NSError *error;
     NSRegularExpression *regex = [NSRegularExpression
                                   regularExpressionWithPattern:
@@ -153,9 +159,11 @@ static NSString *const PlistExtension = @"XcAB.plist";
      options:NSMatchingReportProgress
      range:NSMakeRange(0, outputString.length)
      usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-         // In `result`, the 0th range is the range of the string that matches the whole regex and the 1st and 2nd
-         // ranges are the 1st and 2nd capture groups (the key and value), so there should be 3 ranges in the result--
-         // if there aren't, something's borked.
+         /*
+          *  In `result`, the 0th range is the range of the string that matches the whole regex and the 1st and 2nd
+          *  ranges are the 1st and 2nd capture groups (the key and value), so there should be 3 ranges in the result--
+          *  if there aren't, something's borked.
+          */
          if (result.numberOfRanges != 3) {
              return;
          }
