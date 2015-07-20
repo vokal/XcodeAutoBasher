@@ -116,6 +116,64 @@ static NSString *const PlistExtension = @"XcAB.plist";
     return _directoryWatcher;
 }
 
+- (NSDictionary *)environmentVariables
+{
+    NSAssert(![NSThread isMainThread], @"VOKProjectContainer environmentVariables being retrieved on the main thread.");
+    if ([NSThread isMainThread]) {
+        NSLog(@"VOKProjectContainer environmentVariables being retrieved on the main thread.");
+    }
+    NSPipe *outputPipe = [NSPipe pipe];
+    
+    NSTask *buildSettingsTask = [[NSTask alloc] init];
+    buildSettingsTask.launchPath = @"/usr/bin/xcodebuild";
+    buildSettingsTask.currentDirectoryPath = self.containingPath;
+    buildSettingsTask.arguments = @[ @"-showBuildSettings", ];
+    buildSettingsTask.standardOutput = outputPipe;
+    
+    [buildSettingsTask launch];
+    [buildSettingsTask waitUntilExit];
+    
+    NSData *outputData = [outputPipe.fileHandleForReading readDataToEndOfFile];
+    NSString *outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
+    
+    /*
+     *  The output of `xcodebuild -showBuildSettings` is primarily lines of the form
+     *      [whitespace][key][whitespace]=[whitespace][value]
+     *  so we'll use a regular expression to capture each key and value pair in this format, assuming that the key 
+     *  won't have any whitespace (shell variable names shouldn't).
+     */
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:
+                                  @"^[[:space:]]*([^[:space:]]*)[[:space:]]*=[[:space:]]*(.*)$"
+                                  options:NSRegularExpressionAnchorsMatchLines
+                                  error:&error];
+    if (!regex) {
+        NSLog(@"VOKProjectContainer error making regex: %@", error);
+        return nil;
+    }
+    
+    NSMutableDictionary *env = [NSMutableDictionary dictionary];
+    [regex
+     enumerateMatchesInString:outputString
+     options:NSMatchingReportProgress
+     range:NSMakeRange(0, outputString.length)
+     usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+         /*
+          *  In `result`, the 0th range is the range of the string that matches the whole regex and the 1st and 2nd
+          *  ranges are the 1st and 2nd capture groups (the key and value), so there should be 3 ranges in the result--
+          *  if there aren't, something's borked.
+          */
+         if (result.numberOfRanges != 3) {
+             return;
+         }
+         id variableName = [outputString substringWithRange:[result rangeAtIndex:1]];
+         id variableValue = [outputString substringWithRange:[result rangeAtIndex:2]];
+         env[variableName] = variableValue;
+     }];
+    return [env copy];
+}
+
 #pragma mark - VOKDirectoryWatcherDelegate methods
 
 - (void)directoryDidChange:(NSString *)path

@@ -155,10 +155,13 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
 {
     //Check if file is runnable or Xcode will crash
     if ([[NSFileManager defaultManager] isExecutableFileAtPath:self.absolutePathToScript]) {
-        NSTask *task = [[NSTask alloc] init];
-        task.launchPath = self.absolutePathToScript;
-        task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
-        [task launch];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSTask *task = [[NSTask alloc] init];
+            task.launchPath = self.absolutePathToScript;
+            task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
+            task.environment = self.containingProject.environmentVariables;
+            [task launch];
+        });
     } else {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:[VOKLocalizedStrings ok]];
