@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vokal Open Source</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://vokal.github.io/stylesheets/normalize.css" media="screen">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="https://vokal.github.io/stylesheets/stylesheet.css" media="screen">
+    </head>
+    <body>
+        <section class="page-header">
+            <a href="https://www.vokal.io" class="logo" title="Vokal"></a>
+            <h1 class="project-name">Vokal Open Source</h1>
+            <h2 class="project-tagline">Open source is at the core of our work.</h2>
+        </section>
+
+        <div class="angles">
+            <h1>XcodeAutoBasher</h1>
+        </div>
+
+        <section class="main-content">
+
+    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1>XcodeAutoBasher</h1>
+
+<p><a href="https://github.com/vokal/XcodeAutoBasher/blob/master/XcodeAutoBasher/XcodeAutoBasher/xcab_logo.png" target="_blank"><img src="https://github.com/vokal/XcodeAutoBasher/raw/master/XcodeAutoBasher/XcodeAutoBasher/xcab_logo.png" alt="" style="max-width:100%;"></a></p>
+
+<h1>What</h1>
+
+<p><a href="https://github.com/vokal/XcodeAutoBasher/blob/master/screenshot.png" target="_blank"><img src="https://github.com/vokal/XcodeAutoBasher/raw/master/screenshot.png" alt="" style="max-width:100%;"></a></p>
+
+<p>An Xcode plugin to run a given script any time a given folder or its children have changes. </p>
+
+<h1>Why</h1>
+
+<p>I use several small convenience utilities that are run via shell script. I've previously been running these manually by creating build targets for each of them, but realized I could tie each of them to changes in a specific folder. </p>
+
+<p>My idea was to create something that could do all of the following: </p>
+
+<ul>
+<li>Watch the <code>.xcassets</code> folder recursively and run a script that fires off <a href="http://github.com/vokal/Cat2Cat">Cat2Cat</a> whenever an <code>imageset</code> is added, removed, or renamed. </li>
+<li>Watch the folder where all my Storyboards live and run a script that fires off <a href="https://github.com/square/objc-codegenutils">objc-identifierconstants</a> when one of my storyboards is changed. </li>
+<li>Watch my <code>.xcdatamodeld</code> and fire off <a href="https://github.com/rentzsch/mogenerator">MOGenerator</a> anytime a change to the data model is saved. </li>
+</ul>
+
+<p>The product of that thought process is <code>XcodeAutoBasher</code>. </p>
+
+<h1>Where</h1>
+
+<p>Installable via the <a href="http://alcatraz.io">Alcatraz</a> package manager. </p>
+
+<p>If you hate convenience: </p>
+
+<ol>
+<li>Check out or download a .zip of the code. </li>
+<li>Build and run. </li>
+<li>Restart Xcode. </li>
+</ol>
+
+<h1>How</h1>
+
+<p>After installing, once you restart Xcode, there will be a new option under the <code>Window</code> menu for <code>XcodeAutoBasher</code>. Open that up, and you will see a window showing any currently running projects. Select a currently open project, then:  </p>
+
+<ol>
+<li><p>Click the plus button to add a row to watch a script. <em>(Note: You may have to open the flippy triangle next to the project to see the row you added.)</em></p></li>
+<li><p>Click the <code>...</code> button on the first column to bring up a file selection dialog where you can pick what file or folder you wish to observe.</p></li>
+<li><p>Check the checkbox if you want to watch this folder recursively (ie, if you want to watch all of its children as well).</p></li>
+<li><p>Click the <code>...</code> button on the third column to bring up a file selection dialog where you can pick the script you want to run when a change is detected. </p></li>
+<li><p>A file will be added to the same folder as your <code>.xcodeproj</code> file, <code>[your project name].XcAB.plist</code>, which will store relative paths to each script within your project. This allows the <code>plist</code> files to be committed to version control so anyone opening the project can have this already set up. </p></li>
+</ol>
+
+<h3>Notes on Script Setup</h3>
+
+<ul>
+<li><p>Your scripts should be within the same directory structure as your <code>.xcodeproj</code> file, since this plugin will be looking for children of the <code>.xcodeproj</code>'s parent folder. This allows <code>XcodeAutoBasher</code> to only watch currently open projects, as well as allowing anyone who checks out your project to have <code>XcodeAutoBasher</code> work immediately.</p></li>
+<li><p>Note that scripts outside this directory's children will be run, but on a shared project they will not work well since they will be saved with an absolute path, so they will only work on your machine. </p></li>
+<li><p>You should verify your script runs via the Terminal <em>before</em> you try to add it to <code>XcodeAutoBasher</code>—this will significantly narrow down your "Is this plugin screwing up or is it me?" troubleshooting time.  </p></li>
+<li><p>Scripts should be executable on their own—that is, they should have the executable bit set (<code>chmod +x ...</code>) and the first line should be something like <code>#!/bin/bash</code> or <code>#!/usr/bin/env python</code> (a "<a href="http://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a>").</p></li>
+<li><p>To see if a script is executable, cd into its directory and run <code>ls -la</code>. If the <code>x</code> bit is not set, run <code>chmod +x [filename]</code>, and then run <code>ls -la</code> again to verify the bit is now set. </p></li>
+</ul>
+
+<h1>When</h1>
+
+<p>RIGHT NOW!!!</p>
+
+<h1>Who</h1>
+
+<p>Initially a <a href="http://www.vokalinteractive.com">Vokal</a> Hack Days Fall 2014 Project by <a href="http://github.com/designatednerd">Ellen Shapiro</a>. Massively improved by the desktop programming skillz of <a href="http://github.com/ilg">Isaac</a> <a href="http://github.com/vokal-isaac">Greenspan</a>. </p>
+
+<p>Open source contributions are encouraged!</p>
+
+<h1>//TODO:</h1>
+
+<ul>
+<li>Animate smashing of Xcode logo, because that would be awesome. </li>
+<li>??? File an issue or put up a pull request!</li>
+</ul>
+</article>
+            
+
+        </section>
+
+        <div class="callout-pane">
+            <h5>Want to build the next great project?</h5>
+            <h2>We’re always looking for talented, passionate, forward-thinking people.</h2>
+            <a class="button" href="https://www.vokal.io/careers">Check out our Careers</a>
+        </div>
+
+        <footer class="site-footer">
+            &copy; 2015 Vokal, LLC
+        </footer>
+
+    </body>
+</html>
