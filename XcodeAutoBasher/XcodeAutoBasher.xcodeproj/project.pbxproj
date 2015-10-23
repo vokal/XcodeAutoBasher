@@ -199,8 +199,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = VOK;
-				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Vokal";
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Vokal;
 			};
 			buildConfigurationList = 3322918019CB1447003DDEDC /* Build configuration list for PBXProject "XcodeAutoBasher" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -284,6 +284,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -348,6 +349,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "XcodeAutoBasher/XcodeAutoBasher-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vokalinteractive.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = XcodeAutoBasher;
 				WRAPPER_EXTENSION = xcplugin;
 			};
@@ -364,6 +366,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "XcodeAutoBasher/XcodeAutoBasher-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vokalinteractive.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = XcodeAutoBasher;
 				WRAPPER_EXTENSION = xcplugin;
 			};
