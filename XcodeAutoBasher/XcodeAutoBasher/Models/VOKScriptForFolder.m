@@ -160,6 +160,7 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
             task.launchPath = self.absolutePathToScript;
             task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
             task.environment = self.containingProject.environmentVariables;
+            task.arguments = @[self.pathToFolder];
             [task launch];
         });
     } else {
