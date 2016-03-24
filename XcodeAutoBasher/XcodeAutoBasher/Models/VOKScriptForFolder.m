@@ -157,10 +157,10 @@ static NSString *const ShouldRecurseKey = @"should_recurse";
     if ([[NSFileManager defaultManager] isExecutableFileAtPath:self.absolutePathToScript]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSTask *task = [[NSTask alloc] init];
-            task.launchPath = self.absolutePathToScript;
+            task.launchPath = @"/bin/sh";
             task.currentDirectoryPath = [task.launchPath stringByDeletingLastPathComponent];
             task.environment = self.containingProject.environmentVariables;
-            task.arguments = @[self.pathToFolder];
+            task.arguments = @[self.absolutePathToScript, self.pathToFolder];
             [task launch];
         });
     } else {
