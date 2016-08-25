@@ -22,6 +22,8 @@ My idea was to create something that could do all of the following:
 The product of that thought process is `XcodeAutoBasher`. 
 
 #Where
+Xcode 7. Xcode 8 removed the ability to install third-party plugins. See [#24](https://github.com/vokal/XcodeAutoBasher/issues/24) for discussion.
+
 Installable via the [Alcatraz](http://alcatraz.io) package manager. 
 
 If you hate convenience: 
@@ -56,7 +58,7 @@ After installing, once you restart Xcode, there will be a new option under the `
 - To see if a script is executable, cd into its directory and run `ls -la`. If the `x` bit is not set, run `chmod +x [filename]`, and then run `ls -la` again to verify the bit is now set. 
 
 #When
-RIGHT NOW!!!
+Up until approximately September 2016. See note about about Xcode 8 dropping support for third-party plugins.
 
 #Who
 Initially a [Vokal](http://www.vokalinteractive.com) Hack Days Fall 2014 Project by [Ellen Shapiro](http://github.com/designatednerd). Massively improved by the desktop programming skillz of [Isaac](http://github.com/ilg) [Greenspan](http://github.com/vokal-isaac). 
